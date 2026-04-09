@@ -1,0 +1,21 @@
+{
+  "quizId": "flags-world-001",
+  "category": "guess_the_flag",
+  "format": "emoji_flags",
+  "videoType": "long",
+  "language": "en",
+  "totalQuestions": 10,
+  "style": { "theme": "space", "colorAccent": "#00E5FF", "musicProfile": "epic_rising" },
+  "questions": [
+    { "id": 1, "type": "emoji_decode", "emoji": "🇯🇵", "questionText": "Which country's flag is this?", "options": ["Japan", "China", "South Korea", "Indonesia"], "correctIndex": 0, "timerSeconds": 5, "difficulty": "easy", "funFact": "Japan's flag is called 'Nisshōki' — the circle represents the rising sun." },
+    { "id": 2, "type": "emoji_decode", "emoji": "🇧🇷", "questionText": "Which country's flag is this?", "options": ["Portugal", "Brazil", "Colombia", "Argentina"], "correctIndex": 1, "timerSeconds": 5, "difficulty": "easy", "funFact": "Brazil's flag motto reads 'Ordem e Progresso' — Order and Progress." },
+    { "id": 3, "type": "emoji_decode", "emoji": "🇹🇷", "questionText": "Which country's flag is this?", "options": ["Tunisia", "Turkey", "Pakistan", "Algeria"], "correctIndex": 1, "timerSeconds": 5, "difficulty": "easy", "funFact": "The Turkish flag's crescent and star design dates back to the Ottoman Empire." },
+    { "id": 4, "type": "emoji_decode", "emoji": "🇳🇴", "questionText": "Which country's flag is this?", "options": ["Denmark", "Iceland", "Norway", "Finland"], "correctIndex": 2, "timerSeconds": 5, "difficulty": "medium", "funFact": "Norway's flag uses the Scandinavian cross shared by all Nordic countries." },
+    { "id": 5, "type": "emoji_decode", "emoji": "🇿🇦", "questionText": "Which country's flag is this?", "options": ["Kenya", "South Africa", "Ghana", "Nigeria"], "correctIndex": 1, "timerSeconds": 4, "difficulty": "medium", "funFact": "South Africa's flag has 6 colors — the most of any national flag without a seal." },
+    { "id": 6, "type": "emoji_decode", "emoji": "🇰🇷", "questionText": "Which country's flag is this?", "options": ["North Korea", "Japan", "South Korea", "Vietnam"], "correctIndex": 2, "timerSeconds": 4, "difficulty": "medium", "funFact": "The Korean flag's yin-yang symbol represents cosmic balance." },
+    { "id": 7, "type": "emoji_decode", "emoji": "🇵🇪", "questionText": "Which country's flag is this?", "options": ["Peru", "Canada", "Austria", "Poland"], "correctIndex": 0, "timerSeconds": 4, "difficulty": "hard", "funFact": "Peru's colors were inspired by flamingos seen by liberator José de San Martín." },
+    { "id": 8, "type": "emoji_decode", "emoji": "🇧🇩", "questionText": "Which country's flag is this?", "options": ["Palau", "Japan", "Bangladesh", "Laos"], "correctIndex": 2, "timerSeconds": 4, "difficulty": "hard", "funFact": "Bangladesh's green field represents lush vegetation; the red circle the rising sun." },
+    { "id": 9, "type": "emoji_decode", "emoji": "🇲🇳", "questionText": "Which country's flag is this?", "options": ["Mongolia", "Myanmar", "Mozambique", "Madagascar"], "correctIndex": 0, "timerSeconds": 3, "difficulty": "impossible", "funFact": "Mongolia's Soyombo symbol represents fire, sun, moon, earth, and water." },
+    { "id": 10, "type": "emoji_decode", "emoji": "🇱🇮", "questionText": "Which country's flag is this?", "options": ["Haiti", "Luxembourg", "Liechtenstein", "Netherlands"], "correctIndex": 2, "timerSeconds": 3, "difficulty": "impossible", "funFact": "Liechtenstein added a crown after discovering their flag matched Haiti's at the 1936 Olympics." }
+  ]
+}
