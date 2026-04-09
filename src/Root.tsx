@@ -1,17 +1,8 @@
 import { Composition } from "remotion";
 import { LongQuiz } from "./compositions/LongQuiz";
-import { ShortQuiz } from "./compositions/ShortQuiz";
-import { FPS, questionFrames, calcLongDuration } from "./types";
+import { ShortQuiz, SHORT_TOTAL_FRAMES } from "./compositions/ShortQuiz";
+import { FPS, calcLongDuration } from "./types";
 import sampleData from "./data/sample-flags.json";
-
-const calcShortTotal = (questions: any[]) => {
-  const qs = questions.slice(0, 5);
-  const qFrames = qs.reduce(
-    (sum: number, q: any) => sum + questionFrames(q, false),
-    0
-  );
-  return qFrames + 90;
-};
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -28,17 +19,11 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="ShortQuiz"
         component={ShortQuiz}
-        durationInFrames={calcShortTotal(sampleData.questions)}
+        durationInFrames={SHORT_TOTAL_FRAMES}
         fps={FPS}
         width={1080}
         height={1920}
-        defaultProps={{
-          quizData: {
-            ...sampleData,
-            videoType: "short",
-            questions: sampleData.questions.slice(0, 5),
-          } as any,
-        }}
+        defaultProps={{ quizData: sampleData as any }}
       />
     </>
   );
