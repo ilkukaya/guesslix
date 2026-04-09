@@ -3,11 +3,6 @@ import { Img, spring, useCurrentFrame, interpolate } from "remotion";
 import { C } from "../themes/tokens";
 import { FPS } from "../types";
 
-/**
- * Extract ISO 3166-1 alpha-2 country code from a flag emoji.
- * Flag emojis consist of two Regional Indicator Symbol Letters.
- * E.g. 🇯🇵 → "JP"
- */
 export function emojiToCountryCode(emoji: string): string {
   const codePoints = [...emoji].map((c) => c.codePointAt(0) ?? 0);
   return codePoints
@@ -21,10 +16,10 @@ interface FlagImageProps {
   size?: number;
 }
 
-export const FlagImage: React.FC<FlagImageProps> = ({ emoji, size = 200 }) => {
+export const FlagImage: React.FC<FlagImageProps> = ({ emoji, size = 320 }) => {
   const frame = useCurrentFrame();
   const code = emojiToCountryCode(emoji).toLowerCase();
-  const src = `https://flagcdn.com/w320/${code}.png`;
+  const src = `https://flagcdn.com/w640/${code}.png`;
 
   const s = spring({ frame, fps: FPS, config: { damping: 14 } });
   const scale = interpolate(s, [0, 1], [0.7, 1]);
@@ -33,7 +28,7 @@ export const FlagImage: React.FC<FlagImageProps> = ({ emoji, size = 200 }) => {
   return (
     <div
       style={{
-        marginTop: 30,
+        marginTop: 24,
         display: "flex",
         justifyContent: "center",
         transform: `scale(${scale})`,
@@ -44,8 +39,8 @@ export const FlagImage: React.FC<FlagImageProps> = ({ emoji, size = 200 }) => {
         src={src}
         width={size}
         style={{
-          borderRadius: 12,
-          boxShadow: `0 0 40px ${C.cyanGlow}, 0 4px 20px rgba(0,0,0,0.5)`,
+          borderRadius: 14,
+          boxShadow: `0 0 60px ${C.cyanGlow}, 0 0 120px rgba(0,229,255,0.15), 0 8px 30px rgba(0,0,0,0.6)`,
           border: `2px solid ${C.borderCyan}`,
         }}
       />

@@ -19,12 +19,10 @@ export const QuestionCard: React.FC<Props> = ({
 }) => {
   const frame = useCurrentFrame();
 
-  // Entry animation
   const enterProgress = spring({ frame, fps: FPS, config: { damping: 18 } });
   const y = interpolate(enterProgress, [0, 1], [60, 0]);
   const opacity = interpolate(enterProgress, [0, 1], [0, 1]);
 
-  // Difficulty badge color
   const diffColor =
     question.difficulty === "easy"
       ? C.correct
@@ -43,13 +41,13 @@ export const QuestionCard: React.FC<Props> = ({
         transform: `translateY(${y}px)`,
         opacity,
         fontFamily: FONT,
-        paddingTop: 80,
+        paddingTop: 72,
       }}
     >
       {/* Category label */}
       <div
         style={{
-          fontSize: 16,
+          fontSize: 18,
           fontWeight: 700,
           letterSpacing: 4,
           color: C.textMuted,
@@ -65,12 +63,12 @@ export const QuestionCard: React.FC<Props> = ({
           display: "flex",
           alignItems: "center",
           gap: 12,
-          marginTop: 6,
+          marginTop: 4,
         }}
       >
         <div
           style={{
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: 700,
             color: C.cyan,
           }}
@@ -79,7 +77,7 @@ export const QuestionCard: React.FC<Props> = ({
         </div>
         <div
           style={{
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: 900,
             color: diffColor,
             letterSpacing: 2,
@@ -100,7 +98,7 @@ export const QuestionCard: React.FC<Props> = ({
           fontWeight: 900,
           color: C.white,
           textAlign: "center",
-          marginTop: 28,
+          marginTop: 20,
           maxWidth: 900,
           lineHeight: 1.2,
         }}
@@ -108,8 +106,8 @@ export const QuestionCard: React.FC<Props> = ({
         {question.questionText}
       </div>
 
-      {/* Flag image from CDN */}
-      {question.emoji && <FlagImage emoji={question.emoji} size={240} />}
+      {/* Flag image — 320px wide */}
+      {question.emoji && <FlagImage emoji={question.emoji} size={320} />}
     </div>
   );
 };

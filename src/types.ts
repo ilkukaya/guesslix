@@ -35,6 +35,7 @@ export const PHASE = {
 // Composition-level timing (in frames)
 export const INTRO_FRAMES = 240; // 8 seconds
 export const OUTRO_FRAMES = 360; // 12 seconds
+export const MINI_SPLASH_FRAMES = 24; // 0.8 seconds
 
 export const TRANSITION_FRAMES: Record<string, number> = {
   easy: 60, // 2s
@@ -51,4 +52,25 @@ export function questionFrames(q: QuizQuestion, showFact: boolean) {
     (showFact && q.funFact ? PHASE.funFact : 0) +
     PHASE.transition
   );
+}
+
+/** Calculate total duration of the long quiz including transitions and mini splashes */
+export function calcLongDuration(questions: QuizQuestion[]): number {
+  let total = INTRO_FRAMES;
+  let prevDifficulty = "";
+
+  questions.forEach((q, i) => {
+    const isNewDifficulty = q.difficulty !== prevDifficulty;
+    if (isNewDifficulty) {
+      total += TRANSITION_FRAMES[q.difficulty] || 60;
+      prevDifficulty = q.difficulty;
+    }
+    if (i > 0 && i % 4 === 0 && !isNewDifficulty) {
+      total += MINI_SPLASH_FRAMES;
+    }
+    total += questionFrames(q, !!q.funFact);
+  });
+
+  total += OUTRO_FRAMES;
+  return total;
 }

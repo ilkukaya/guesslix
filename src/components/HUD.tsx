@@ -1,15 +1,15 @@
 import React from "react";
 import { C, FONT } from "../themes/tokens";
 
-/* ===== WATERMARK (colored: GUESS white + LIX cyan) ===== */
+/* ===== WATERMARK (colored, 26px) ===== */
 export const Watermark: React.FC = () => (
   <div
     style={{
       position: "absolute",
-      top: 28,
+      top: 26,
       right: 36,
       fontFamily: FONT,
-      fontSize: 22,
+      fontSize: 26,
       fontWeight: 900,
       letterSpacing: 3,
       opacity: 0.35,
@@ -21,7 +21,7 @@ export const Watermark: React.FC = () => (
   </div>
 );
 
-/* ===== QUESTION COUNTER (replaces ScoreHUD) ===== */
+/* ===== QUESTION COUNTER (28px) ===== */
 interface QuestionCounterProps {
   current: number;
   total: number;
@@ -37,7 +37,7 @@ export const QuestionCounter: React.FC<QuestionCounterProps> = ({
       top: 26,
       left: 40,
       fontFamily: FONT,
-      fontSize: 22,
+      fontSize: 28,
       fontWeight: 900,
       color: C.cyan,
       zIndex: 90,

@@ -15,23 +15,20 @@ export const TimerRing: React.FC<Props> = ({ timerSeconds, startFrame }) => {
   const progress = Math.min(elapsed / totalFrames, 1);
   const remaining = Math.max(Math.ceil(timerSeconds - elapsed / FPS), 0);
 
-  // Circle math
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * progress;
 
-  // Color transitions
   const isWarning = remaining <= 3 && remaining > 1;
   const isCritical = remaining <= 1;
   const ringColor = isCritical ? C.wrong : isWarning ? C.gold : C.cyan;
   const glowColor = isCritical ? C.wrongGlow : isWarning ? C.goldGlow : C.cyanGlow;
 
-  // Pulse effect in last 3 seconds
-  const pulse = remaining <= 3
-    ? interpolate(Math.sin(elapsed * 0.5), [-1, 1], [0.95, 1.08])
-    : 1;
+  const pulse =
+    remaining <= 3
+      ? interpolate(Math.sin(elapsed * 0.5), [-1, 1], [0.95, 1.08])
+      : 1;
 
-  // Number color
   const numColor = isCritical ? C.wrong : isWarning ? C.gold : C.white;
 
   if (progress >= 1) return null;
@@ -40,12 +37,13 @@ export const TimerRing: React.FC<Props> = ({ timerSeconds, startFrame }) => {
     <div
       style={{
         position: "absolute",
-        bottom: 60,
+        top: "55%",
         left: "50%",
-        transform: `translateX(-50%) scale(${pulse})`,
+        transform: `translate(-50%, -50%) scale(${pulse})`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        zIndex: 70,
       }}
     >
       {/* Outer glow ring */}
@@ -61,7 +59,6 @@ export const TimerRing: React.FC<Props> = ({ timerSeconds, startFrame }) => {
       />
 
       <svg width={110} height={110} style={{ transform: "rotate(-90deg)" }}>
-        {/* Background ring */}
         <circle
           cx={55}
           cy={55}
@@ -70,7 +67,6 @@ export const TimerRing: React.FC<Props> = ({ timerSeconds, startFrame }) => {
           stroke={C.borderCyan}
           strokeWidth={4}
         />
-        {/* Progress ring */}
         <circle
           cx={55}
           cy={55}
@@ -85,7 +81,6 @@ export const TimerRing: React.FC<Props> = ({ timerSeconds, startFrame }) => {
         />
       </svg>
 
-      {/* Number overlay */}
       <div
         style={{
           position: "absolute",
