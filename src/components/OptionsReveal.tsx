@@ -33,13 +33,11 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
       }}
     >
       {options.map((opt, i) => {
-        // Stagger entrance
         const delay = i * 3;
         const enter = spring({ frame, fps: FPS, delay, config: { damping: 16 } });
         const scale = interpolate(enter, [0, 1], [0.85, 1]);
         const opacity = interpolate(enter, [0, 1], [0, 1]);
 
-        // Reveal state
         const isCorrect = i === correctIndex;
         const revealed = revealState === "shown";
 
@@ -77,7 +75,6 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
               transition: "all 0.3s ease",
             }}
           >
-            {/* Letter badge */}
             <div
               style={{
                 width: 34,
@@ -97,8 +94,6 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
             >
               {LETTERS[i]}
             </div>
-
-            {/* Option text */}
             <span
               style={{
                 fontSize: isShort ? 22 : 26,
@@ -117,34 +112,16 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
   );
 };
 
-/* ===== ANSWER REVEAL OVERLAY ===== */
-interface RevealProps {
-  isCorrect: boolean;
-  points: number;
+/* ===== FUN FACT OVERLAY (no score/correct text) ===== */
+interface FunFactProps {
   funFact?: string;
   showFact: boolean;
 }
 
-export const AnswerReveal: React.FC<RevealProps> = ({
-  isCorrect,
-  points,
-  funFact,
-  showFact,
-}) => {
+export const FunFactOverlay: React.FC<FunFactProps> = ({ funFact, showFact }) => {
   const frame = useCurrentFrame();
-  const pop = spring({ frame, fps: FPS, config: { damping: 10, mass: 0.6 } });
-  const scale = interpolate(pop, [0, 1], [0.5, 1]);
-  const opacity = interpolate(pop, [0, 1], [0, 1]);
 
-  // Points float up (relative to this component's mount time)
-  const pointsY = interpolate(frame, [0, 40], [0, -40], {
-    extrapolateRight: "clamp",
-  });
-  const pointsOpacity = interpolate(frame, [0, 10, 35, 45], [0, 1, 1, 0], {
-    extrapolateRight: "clamp",
-  });
-
-  // Fun fact fades in after the reveal text settles
+  // Fun fact fades in after the initial reveal pause
   const revealFrames = PHASE.reveal;
   const factOpacity = showFact
     ? interpolate(frame, [revealFrames, revealFrames + 15], [0, 1], {
@@ -159,13 +136,14 @@ export const AnswerReveal: React.FC<RevealProps> = ({
       })
     : 0;
 
+  if (!funFact || !showFact) return null;
+
   return (
     <div
       style={{
         position: "absolute",
         inset: 0,
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         fontFamily: FONT,
@@ -173,59 +151,25 @@ export const AnswerReveal: React.FC<RevealProps> = ({
         pointerEvents: "none",
       }}
     >
-      {/* CORRECT / WRONG text */}
       <div
         style={{
-          fontSize: 64,
-          fontWeight: 900,
-          color: isCorrect ? C.correct : C.wrong,
-          textShadow: `0 0 50px ${isCorrect ? C.correctGlow : C.wrongGlow}`,
-          letterSpacing: 6,
-          transform: `scale(${scale})`,
-          opacity,
+          marginTop: 220,
+          maxWidth: 700,
+          padding: "20px 30px",
+          background: C.bgSurface,
+          border: `1px solid ${C.borderCyan}`,
+          borderRadius: 14,
+          fontSize: 20,
+          color: C.textSec,
+          textAlign: "center",
+          lineHeight: 1.5,
+          opacity: factOpacity,
+          transform: `translateY(${factY}px)`,
         }}
       >
-        {isCorrect ? "CORRECT!" : "WRONG!"}
+        <span style={{ color: C.gold, marginRight: 8 }}>💡</span>
+        {funFact}
       </div>
-
-      {/* Points */}
-      {isCorrect && (
-        <div
-          style={{
-            fontSize: 30,
-            fontWeight: 900,
-            color: C.gold,
-            marginTop: 10,
-            transform: `translateY(${pointsY}px)`,
-            opacity: pointsOpacity,
-          }}
-        >
-          +{points} pts
-        </div>
-      )}
-
-      {/* Fun fact */}
-      {funFact && showFact && (
-        <div
-          style={{
-            marginTop: 40,
-            maxWidth: 700,
-            padding: "20px 30px",
-            background: C.bgSurface,
-            border: `1px solid ${C.borderCyan}`,
-            borderRadius: 14,
-            fontSize: 20,
-            color: C.textSec,
-            textAlign: "center",
-            lineHeight: 1.5,
-            opacity: factOpacity,
-            transform: `translateY(${factY}px)`,
-          }}
-        >
-          <span style={{ color: C.gold, marginRight: 8 }}>💡</span>
-          {funFact}
-        </div>
-      )}
     </div>
   );
 };

@@ -32,6 +32,17 @@ export const PHASE = {
   transition: 12,
 };
 
+// Composition-level timing (in frames)
+export const INTRO_FRAMES = 240; // 8 seconds
+export const OUTRO_FRAMES = 360; // 12 seconds
+
+export const TRANSITION_FRAMES: Record<string, number> = {
+  easy: 60, // 2s
+  medium: 60, // 2s
+  hard: 60, // 2s
+  impossible: 90, // 3s
+};
+
 export function questionFrames(q: QuizQuestion, showFact: boolean) {
   return (
     PHASE.enter +

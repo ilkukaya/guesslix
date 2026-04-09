@@ -1,7 +1,7 @@
 import React from "react";
 import { C, FONT } from "../themes/tokens";
 
-/* ===== WATERMARK ===== */
+/* ===== WATERMARK (colored: GUESS white + LIX cyan) ===== */
 export const Watermark: React.FC = () => (
   <div
     style={{
@@ -9,70 +9,42 @@ export const Watermark: React.FC = () => (
       top: 28,
       right: 36,
       fontFamily: FONT,
-      fontSize: 18,
+      fontSize: 22,
       fontWeight: 900,
       letterSpacing: 3,
-      color: C.white,
-      opacity: 0.3,
+      opacity: 0.35,
       zIndex: 100,
     }}
   >
-    GUESSLIX
+    <span style={{ color: C.white }}>GUESS</span>
+    <span style={{ color: C.cyan }}>LIX</span>
   </div>
 );
 
-/* ===== SCORE HUD ===== */
-interface ScoreHUDProps {
-  score: number;
-  streak: number;
+/* ===== QUESTION COUNTER (replaces ScoreHUD) ===== */
+interface QuestionCounterProps {
+  current: number;
+  total: number;
 }
 
-export const ScoreHUD: React.FC<ScoreHUDProps> = ({ score, streak }) => (
+export const QuestionCounter: React.FC<QuestionCounterProps> = ({
+  current,
+  total,
+}) => (
   <div
     style={{
       position: "absolute",
-      top: 24,
+      top: 26,
       left: 40,
-      right: 40,
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
       fontFamily: FONT,
+      fontSize: 22,
+      fontWeight: 900,
+      color: C.cyan,
       zIndex: 90,
+      letterSpacing: 1,
     }}
   >
-    {/* Streak */}
-    <div
-      style={{
-        fontSize: 22,
-        fontWeight: 900,
-        color: C.gold,
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-      }}
-    >
-      {streak >= 5 ? "🔥" : streak > 0 ? "⚡" : ""}
-      <span>{streak > 0 ? `${streak} streak` : ""}</span>
-      {streak >= 5 && (
-        <span
-          style={{
-            fontSize: 13,
-            color: C.wrong,
-            fontWeight: 700,
-            marginLeft: 8,
-            letterSpacing: 2,
-          }}
-        >
-          ON FIRE!
-        </span>
-      )}
-    </div>
-
-    {/* Score */}
-    <div style={{ fontSize: 22, fontWeight: 900, color: C.cyan }}>
-      SCORE: {score.toLocaleString()}
-    </div>
+    {current}/{total}
   </div>
 );
 

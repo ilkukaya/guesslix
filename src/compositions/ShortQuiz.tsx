@@ -12,11 +12,11 @@ import { QuizData, FPS, PHASE, questionFrames } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
 import { QuestionCard } from "../components/QuestionCard";
-import { OptionsGrid, AnswerReveal } from "../components/OptionsReveal";
+import { OptionsGrid } from "../components/OptionsReveal";
 import { TimerRing } from "../components/TimerRing";
 
 /* Short outro with CTA */
-const ShortOutro: React.FC<{ correct: number; total: number }> = ({ correct, total }) => {
+const ShortOutro: React.FC<{ total: number }> = ({ total }) => {
   const frame = useCurrentFrame();
   const s = spring({ frame, fps: FPS, config: { damping: 12 } });
   const scale = interpolate(s, [0, 1], [0.7, 1]);
@@ -33,26 +33,29 @@ const ShortOutro: React.FC<{ correct: number; total: number }> = ({ correct, tot
       }}
     >
       <div style={{ transform: `scale(${scale})`, opacity, textAlign: "center" }}>
-        <div style={{ fontSize: 20, color: C.textMuted, letterSpacing: 4, fontWeight: 700 }}>
-          YOUR SCORE
-        </div>
         <div
           style={{
-            fontSize: 80,
+            fontSize: 36,
             fontWeight: 900,
             color: C.gold,
             textShadow: `0 0 40px ${C.goldGlow}`,
-            marginTop: 8,
           }}
         >
-          {correct}/{total}
-        </div>
-        <div style={{ fontSize: 22, color: C.cyan, fontWeight: 700, marginTop: 8 }}>
-          {correct === total ? "PERFECT!" : correct >= total * 0.6 ? "NICE!" : "TRY AGAIN!"}
+          How many did you get?
         </div>
         <div
           style={{
-            marginTop: 50,
+            fontSize: 22,
+            color: C.cyan,
+            fontWeight: 700,
+            marginTop: 16,
+          }}
+        >
+          Comment below! 👇
+        </div>
+        <div
+          style={{
+            marginTop: 40,
             fontSize: 20,
             color: C.textSec,
             lineHeight: 1.6,
@@ -98,6 +101,22 @@ const ShortQuestion: React.FC<{
 
   return (
     <AbsoluteFill>
+      {/* Question counter */}
+      <div
+        style={{
+          position: "absolute",
+          top: 26,
+          left: 20,
+          fontFamily: FONT,
+          fontSize: 18,
+          fontWeight: 900,
+          color: C.cyan,
+          zIndex: 90,
+        }}
+      >
+        {num}/{total}
+      </div>
+
       <QuestionCard
         question={question}
         questionNumber={num}
@@ -115,11 +134,6 @@ const ShortQuestion: React.FC<{
       {phase === "timer" && (
         <TimerRing timerSeconds={question.timerSeconds} startFrame={enterEnd} />
       )}
-      {phase === "reveal" && (
-        <Sequence from={timerEnd} durationInFrames={PHASE.reveal}>
-          <AnswerReveal isCorrect points={100} showFact={false} />
-        </Sequence>
-      )}
       {/* Correct ding on reveal */}
       <Sequence from={timerEnd} durationInFrames={FPS}>
         <Audio src={staticFile("audio/correct.wav")} volume={0.5} />
@@ -132,7 +146,6 @@ const ShortQuestion: React.FC<{
 export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   const { questions, category } = quizData;
   const shorts = questions.slice(0, 5);
-  const correctCount = shorts.length; // all correct
 
   let offset = 0;
   const offsets = shorts.map((q) => {
@@ -142,27 +155,27 @@ export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
     return { start, duration };
   });
 
-  const outroDuration = 90; // 3 seconds
+  const outroDuration = 90;
 
   return (
     <AbsoluteFill>
       <Background />
-      {/* Watermark */}
+      {/* Colored watermark */}
       <div
         style={{
           position: "absolute",
           top: 20,
           right: 20,
           fontFamily: FONT,
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: 900,
           letterSpacing: 2,
-          color: C.white,
-          opacity: 0.25,
+          opacity: 0.35,
           zIndex: 100,
         }}
       >
-        GUESSLIX
+        <span style={{ color: C.white }}>GUESS</span>
+        <span style={{ color: C.cyan }}>LIX</span>
       </div>
 
       {shorts.map((q, i) => (
@@ -177,7 +190,7 @@ export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
       ))}
 
       <Sequence from={offset} durationInFrames={outroDuration}>
-        <ShortOutro correct={correctCount} total={shorts.length} />
+        <ShortOutro total={shorts.length} />
       </Sequence>
     </AbsoluteFill>
   );
