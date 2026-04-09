@@ -5,6 +5,8 @@ import {
   useCurrentFrame,
   spring,
   interpolate,
+  Audio,
+  staticFile,
 } from "remotion";
 import { QuizData, FPS, PHASE, questionFrames } from "../types";
 import { C, FONT } from "../themes/tokens";
@@ -14,15 +16,6 @@ import { QuestionCard } from "../components/QuestionCard";
 import { OptionsGrid, AnswerReveal } from "../components/OptionsReveal";
 import { TimerRing } from "../components/TimerRing";
 import { OutroScreen } from "../components/OutroScreen";
-
-// Pre-generate "answer pattern" — simulate which answers are correct
-// For real use, you'd control this via props
-const generateAnswerPattern = (count: number): boolean[] =>
-  Array.from({ length: count }, (_, i) => {
-    // Simulate ~70% correct rate with some streaks
-    const seed = Math.sin(i * 4321 + 1234) * 10000;
-    return (seed - Math.floor(seed)) > 0.3;
-  });
 
 /* ===== INTRO SEQUENCE ===== */
 const IntroSequence: React.FC = () => {
@@ -42,10 +35,21 @@ const IntroSequence: React.FC = () => {
       }}
     >
       <div style={{ transform: `scale(${scale})`, opacity, textAlign: "center" }}>
-        <div style={{ fontSize: 80, fontWeight: 900, letterSpacing: 6 }}>
+        <div style={{ fontSize: 90, fontWeight: 900, letterSpacing: 6 }}>
           <span style={{ color: C.white }}>GUESS</span>
           <span style={{ color: C.cyan, textShadow: `0 0 40px ${C.cyanGlow}` }}>LIX</span>
           <span style={{ color: C.gold, marginLeft: 10 }}>?</span>
+        </div>
+        <div
+          style={{
+            fontSize: 20,
+            color: C.textMuted,
+            letterSpacing: 6,
+            marginTop: 16,
+            fontWeight: 700,
+          }}
+        >
+          GUESS THE FLAG
         </div>
       </div>
     </AbsoluteFill>
@@ -58,7 +62,6 @@ interface QuestionSceneProps {
   questionNumber: number;
   totalQuestions: number;
   category: string;
-  isCorrect: boolean;
   score: number;
   streak: number;
   showFunFact: boolean;
@@ -69,7 +72,6 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
   questionNumber,
   totalQuestions,
   category,
-  isCorrect,
   score,
   streak,
   showFunFact,
@@ -79,6 +81,7 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
   const enterEnd = PHASE.enter;
   const timerEnd = enterEnd + PHASE.timer(question.timerSeconds);
   const revealEnd = timerEnd + PHASE.reveal;
+  const totalRevealAndFact = PHASE.reveal + (showFunFact && question.funFact ? PHASE.funFact : 0);
 
   const phase =
     frame < enterEnd ? "enter" :
@@ -86,7 +89,10 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
     frame < revealEnd ? "reveal" : "funfact";
 
   const revealState = phase === "reveal" || phase === "funfact" ? "shown" : "hidden";
-  const points = isCorrect ? (streak >= 3 ? 150 : 100) : 0;
+
+  // All answers are always correct (viewer guesses, video reveals correct answer)
+  const isCorrect = true;
+  const points = streak >= 3 ? 150 : 100;
 
   // Score display updates after reveal
   const displayScore = phase === "enter" || phase === "timer"
@@ -95,7 +101,11 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
 
   const displayStreak = phase === "enter" || phase === "timer"
     ? streak
-    : isCorrect ? streak + 1 : 0;
+    : streak + 1;
+
+  // Timer countdown seconds
+  const timerElapsed = Math.max(0, frame - enterEnd);
+  const remaining = Math.max(0, Math.ceil(question.timerSeconds - timerElapsed / FPS));
 
   return (
     <AbsoluteFill>
@@ -123,16 +133,31 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
         />
       )}
 
+      {/* Countdown beeps in last 3 seconds */}
+      {phase === "timer" && remaining <= 3 && remaining > 0 && (
+        <Audio
+          src={staticFile("audio/countdown.wav")}
+          volume={0.4}
+          startFrom={0}
+        />
+      )}
+
+      {/* Answer reveal - mounted in its own Sequence so frame resets to 0 */}
       {(phase === "reveal" || phase === "funfact") && (
-        <Sequence from={0}>
+        <Sequence from={timerEnd} durationInFrames={totalRevealAndFact}>
           <AnswerReveal
             isCorrect={isCorrect}
             points={points}
             funFact={question.funFact}
-            showFact={showFunFact && phase === "funfact"}
+            showFact={showFunFact}
           />
         </Sequence>
       )}
+
+      {/* Correct ding sound on reveal */}
+      <Sequence from={timerEnd} durationInFrames={FPS}>
+        <Audio src={staticFile("audio/correct.wav")} volume={0.6} />
+      </Sequence>
 
       <DifficultyBar current={questionNumber} total={totalQuestions} />
     </AbsoluteFill>
@@ -142,39 +167,32 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
 /* ===== MAIN COMPOSITION ===== */
 export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   const { questions, category, totalQuestions } = quizData;
-  const answers = generateAnswerPattern(questions.length);
 
-  // Calculate running scores and streaks
+  // All answers are always correct — calculate running scores
   let runningScore = 0;
   let runningStreak = 0;
   let bestStreak = 0;
-  let correctCount = 0;
 
-  const scoreMap = questions.map((q, i) => {
+  const scoreMap = questions.map((_q, _i) => {
     const score = runningScore;
     const streak = runningStreak;
-    const isCorrect = answers[i];
 
-    if (isCorrect) {
-      const pts = runningStreak >= 3 ? 150 : 100;
-      runningScore += pts;
-      runningStreak += 1;
-      correctCount += 1;
-      if (runningStreak > bestStreak) bestStreak = runningStreak;
-    } else {
-      runningStreak = 0;
-    }
+    const pts = runningStreak >= 3 ? 150 : 100;
+    runningScore += pts;
+    runningStreak += 1;
+    if (runningStreak > bestStreak) bestStreak = runningStreak;
 
-    return { score, streak, isCorrect };
+    return { score, streak };
   });
 
   const finalScore = runningScore;
+  const correctCount = questions.length;
 
   // Build sequence offsets
-  const introFrames = 20;
+  const introFrames = 90; // 3 seconds
   let offset = introFrames;
 
-  const questionOffsets = questions.map((q, i) => {
+  const questionOffsets = questions.map((q) => {
     const start = offset;
     const showFact = !!q.funFact;
     const duration = questionFrames(q, showFact);
@@ -183,7 +201,7 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   });
 
   const outroStart = offset;
-  const outroDuration = 300; // 10 seconds
+  const outroDuration = 450; // 15 seconds
 
   return (
     <AbsoluteFill>
@@ -207,7 +225,6 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
             questionNumber={i + 1}
             totalQuestions={totalQuestions || questions.length}
             category={category}
-            isCorrect={scoreMap[i].isCorrect}
             score={scoreMap[i].score}
             streak={scoreMap[i].streak}
             showFunFact={questionOffsets[i].showFact}

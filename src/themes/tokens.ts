@@ -1,3 +1,7 @@
+import { loadFont } from "@remotion/google-fonts/Montserrat";
+
+const { fontFamily } = loadFont();
+
 export const C = {
   bg: "#0A0E1A",
   bgLight: "#111833",
@@ -21,4 +25,4 @@ export const C = {
   borderCyan: "rgba(0,229,255,0.15)",
 } as const;
 
-export const FONT = "'Montserrat', sans-serif";
+export const FONT = fontFamily;
