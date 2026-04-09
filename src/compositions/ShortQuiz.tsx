@@ -134,6 +134,21 @@ const ShortQuestion: React.FC<{
       {phase === "timer" && (
         <TimerRing timerSeconds={question.timerSeconds} startFrame={enterEnd} />
       )}
+      {/* Whoosh on enter */}
+      <Sequence from={0} durationInFrames={FPS}>
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.3} />
+      </Sequence>
+      {/* Timer ticks */}
+      {Array.from({ length: Math.max(0, question.timerSeconds - 3) }, (_, i) => (
+        <Sequence key={`tn-${i}`} from={enterEnd + i * FPS} durationInFrames={FPS}>
+          <Audio src={staticFile("audio/tick.wav")} volume={0.2} />
+        </Sequence>
+      ))}
+      {Array.from({ length: 6 }, (_, i) => (
+        <Sequence key={`tf-${i}`} from={enterEnd + Math.max(0, question.timerSeconds - 3) * FPS + i * Math.floor(FPS / 2)} durationInFrames={Math.floor(FPS / 2)}>
+          <Audio src={staticFile("audio/tick_fast.wav")} volume={0.25} />
+        </Sequence>
+      ))}
       {/* Correct ding on reveal */}
       <Sequence from={timerEnd} durationInFrames={FPS}>
         <Audio src={staticFile("audio/correct.wav")} volume={0.5} />
