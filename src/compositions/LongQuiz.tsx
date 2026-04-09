@@ -29,7 +29,7 @@ import { OutroScreen } from "../components/OutroScreen";
 
 /* ================================================================
    INTRO SEQUENCE — 8 seconds (240 frames)
-   Phase 1 (0-90):   GUESSLIX logo
+   Phase 1 (0-90):   GUESSLIX logo + boom
    Phase 2 (90-150): "GUESS THE FLAG" big title
    Phase 3 (150-240): Random flags with "?" pouring in
    ================================================================ */
@@ -53,12 +53,10 @@ const IntroSequence: React.FC = () => {
   const P1_END = 90;
   const P2_END = 150;
 
-  // Logo animation
   const logoSpring = spring({ frame, fps: FPS, config: { damping: 12 } });
   const logoBaseScale = interpolate(logoSpring, [0, 1], [0.8, 1]);
   const logoOpacity = interpolate(logoSpring, [0, 1], [0, 1]);
 
-  // Logo shrinks & moves up in phase 2
   const logoShrink = interpolate(frame, [P1_END, P1_END + 20], [1, 0.55], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -68,7 +66,6 @@ const IntroSequence: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // "GUESS THE FLAG" title (phase 2+)
   const titleFrame = Math.max(0, frame - P1_END);
   const titleSpring = spring({
     frame: titleFrame,
@@ -84,7 +81,6 @@ const IntroSequence: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: C.bg, fontFamily: FONT }}>
-      {/* Background glow */}
       <div
         style={{
           position: "absolute",
@@ -178,7 +174,6 @@ const IntroSequence: React.FC = () => {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
                 }}
               />
-              {/* "?" overlay */}
               <div
                 style={{
                   position: "absolute",
@@ -197,6 +192,9 @@ const IntroSequence: React.FC = () => {
             </div>
           );
         })}
+
+      {/* Audio: intro boom when logo appears */}
+      <Audio src={staticFile("audio/intro_boom.wav")} volume={0.7} />
     </AbsoluteFill>
   );
 };
@@ -247,12 +245,10 @@ const CategoryTransition: React.FC<{ difficulty: string }> = ({ difficulty }) =>
   const scale = interpolate(s, [0, 1], [0.3, 1]);
   const opacity = interpolate(s, [0, 1], [0, 1]);
 
-  // Flash effect on appear
   const flash = interpolate(frame, [0, 5, 18], [0, 0.4, 0], {
     extrapolateRight: "clamp",
   });
 
-  // Screen shake for impossible
   const shake =
     difficulty === "impossible" && frame > 8
       ? Math.sin(frame * 2.5) *
@@ -270,7 +266,6 @@ const CategoryTransition: React.FC<{ difficulty: string }> = ({ difficulty }) =>
         transform: `translateX(${shake}px)`,
       }}
     >
-      {/* Background glow */}
       <div
         style={{
           position: "absolute",
@@ -280,17 +275,9 @@ const CategoryTransition: React.FC<{ difficulty: string }> = ({ difficulty }) =>
           background: `radial-gradient(circle, ${config.bgGlow} 0%, transparent 70%)`,
         }}
       />
-
-      {/* Flash overlay */}
       <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: config.color,
-          opacity: flash,
-        }}
+        style={{ position: "absolute", inset: 0, background: config.color, opacity: flash }}
       />
-
       <div style={{ textAlign: "center", transform: `scale(${scale})`, opacity }}>
         <div style={{ fontSize: 80, marginBottom: 10 }}>{config.emoji}</div>
         <div
@@ -304,23 +291,19 @@ const CategoryTransition: React.FC<{ difficulty: string }> = ({ difficulty }) =>
         >
           {config.label}
         </div>
-        <div
-          style={{
-            fontSize: 28,
-            color: C.textSec,
-            marginTop: 16,
-            fontWeight: 600,
-          }}
-        >
+        <div style={{ fontSize: 28, color: C.textSec, marginTop: 16, fontWeight: 600 }}>
           {config.subtitle}
         </div>
       </div>
+
+      {/* Audio: level up sound */}
+      <Audio src={staticFile("audio/levelup.wav")} volume={0.55} />
     </AbsoluteFill>
   );
 };
 
 /* ================================================================
-   CTA BANNER (bottom overlay, subtle)
+   CTA BANNER
    ================================================================ */
 
 const CTA_MESSAGES = [
@@ -366,12 +349,44 @@ const CtaBanner: React.FC<{ message: string }> = ({ message }) => {
       >
         {message}
       </div>
+      {/* Pop sound */}
+      <Audio src={staticFile("audio/pop.wav")} volume={0.3} />
     </div>
   );
 };
 
 /* ================================================================
-   SINGLE QUESTION SCENE (no scoring)
+   TIMER TICK SOUNDS — builds tick Sequences for a question
+   ================================================================ */
+
+const TimerTicks: React.FC<{ timerSeconds: number; enterEnd: number }> = ({
+  timerSeconds,
+  enterEnd,
+}) => {
+  const normalCount = Math.max(0, timerSeconds - 3);
+  const fastStart = enterEnd + normalCount * FPS;
+  const HALF = Math.floor(FPS / 2); // 15 frames
+
+  return (
+    <>
+      {/* Normal ticks: 1 per second for the non-urgent portion */}
+      {Array.from({ length: normalCount }, (_, i) => (
+        <Sequence key={`tn-${i}`} from={enterEnd + i * FPS} durationInFrames={FPS}>
+          <Audio src={staticFile("audio/tick.wav")} volume={0.2} />
+        </Sequence>
+      ))}
+      {/* Fast ticks: every 0.5s for the last 3 seconds */}
+      {Array.from({ length: 6 }, (_, i) => (
+        <Sequence key={`tf-${i}`} from={fastStart + i * HALF} durationInFrames={HALF}>
+          <Audio src={staticFile("audio/tick_fast.wav")} volume={0.3} />
+        </Sequence>
+      ))}
+    </>
+  );
+};
+
+/* ================================================================
+   SINGLE QUESTION SCENE
    ================================================================ */
 
 interface QuestionSceneProps {
@@ -436,19 +451,29 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
         <TimerRing timerSeconds={question.timerSeconds} startFrame={enterEnd} />
       )}
 
-      {/* Fun fact overlay — mounted in Sequence so frame resets */}
+      {/* Fun fact overlay */}
       {isRevealPhase && (
         <Sequence from={timerEnd} durationInFrames={totalRevealAndFact}>
           <FunFactOverlay funFact={question.funFact} showFact={showFunFact} />
         </Sequence>
       )}
 
-      {/* Correct ding sound on reveal */}
+      {/* === AUDIO === */}
+
+      {/* Whoosh on question enter */}
+      <Sequence from={0} durationInFrames={FPS}>
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} />
+      </Sequence>
+
+      {/* Timer tick sounds */}
+      <TimerTicks timerSeconds={question.timerSeconds} enterEnd={enterEnd} />
+
+      {/* Correct ding on reveal */}
       <Sequence from={timerEnd} durationInFrames={FPS}>
         <Audio src={staticFile("audio/correct.wav")} volume={0.6} />
       </Sequence>
 
-      {/* CTA banner during reveal phase */}
+      {/* CTA banner + pop sound during reveal */}
       {showCta && isRevealPhase && (
         <Sequence from={timerEnd + 10} durationInFrames={45}>
           <CtaBanner message={ctaMessage} />
@@ -467,11 +492,9 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
 export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   const { questions, category } = quizData;
 
-  // Build timeline: intro → [transition + questions]... → outro
   let offset = INTRO_FRAMES;
   let prevDifficulty = "";
 
-  // Collect all timeline segments
   const transitions: Array<{ start: number; duration: number; difficulty: string }> = [];
   const questionSlots: Array<{
     start: number;
@@ -484,7 +507,6 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   }> = [];
 
   questions.forEach((q, i) => {
-    // Insert category transition when difficulty changes
     if (q.difficulty !== prevDifficulty) {
       const transDur = TRANSITION_FRAMES[q.difficulty] || 60;
       transitions.push({ start: offset, duration: transDur, difficulty: q.difficulty });
@@ -494,7 +516,6 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
 
     const showFact = !!q.funFact;
     const dur = questionFrames(q, showFact);
-    // CTA every 10 questions (on q 10, 20, 30, 40)
     const showCta = i > 0 && (i + 1) % 10 === 0;
     const ctaMessage = CTA_MESSAGES[Math.floor(i / 10) % CTA_MESSAGES.length];
 
@@ -517,19 +538,19 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
       <Background />
       <Watermark />
 
-      {/* Intro */}
+      {/* Intro + boom sound */}
       <Sequence from={0} durationInFrames={INTRO_FRAMES}>
         <IntroSequence />
       </Sequence>
 
-      {/* Category transitions */}
+      {/* Category transitions + level up sound */}
       {transitions.map((t, i) => (
         <Sequence key={`trans-${i}`} from={t.start} durationInFrames={t.duration}>
           <CategoryTransition difficulty={t.difficulty} />
         </Sequence>
       ))}
 
-      {/* Questions */}
+      {/* Questions (all audio wired inside QuestionScene) */}
       {questionSlots.map((slot) => (
         <Sequence
           key={slot.question.id}
@@ -548,10 +569,11 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
         </Sequence>
       ))}
 
-      {/* Outro */}
+      {/* Outro + fanfare sound */}
       <Sequence from={outroStart} durationInFrames={OUTRO_FRAMES}>
         <AbsoluteFill>
           <OutroScreen />
+          <Audio src={staticFile("audio/fanfare.wav")} volume={0.5} />
         </AbsoluteFill>
       </Sequence>
     </AbsoluteFill>

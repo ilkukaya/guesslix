@@ -47,21 +47,16 @@ const ConfettiParticle: React.FC<{ index: number }> = ({ index }) => {
 export const OutroScreen: React.FC = () => {
   const frame = useCurrentFrame();
 
-  // Staggered animations
   const anim = (delay: number) => {
     const s = spring({ frame, fps: FPS, delay, config: { damping: 14 } });
     return {
       opacity: interpolate(s, [0, 1], [0, 1]),
-      transform: `translateY(${interpolate(s, [0, 1], [30, 0])}px)`,
+      transform: `translateY(${interpolate(s, [0, 1], [40, 0])}px)`,
     };
   };
 
   // Subscribe button pulse
-  const pulse = interpolate(
-    Math.sin(frame * 0.12),
-    [-1, 1],
-    [1, 1.06]
-  );
+  const pulse = interpolate(Math.sin(frame * 0.12), [-1, 1], [1, 1.08]);
 
   return (
     <div
@@ -78,7 +73,7 @@ export const OutroScreen: React.FC = () => {
       }}
     >
       {/* Confetti */}
-      {Array.from({ length: 40 }, (_, i) => (
+      {Array.from({ length: 50 }, (_, i) => (
         <ConfettiParticle key={i} index={i} />
       ))}
 
@@ -86,25 +81,27 @@ export const OutroScreen: React.FC = () => {
       <div style={anim(0)}>
         <div
           style={{
-            fontSize: 60,
+            fontSize: 80,
             fontWeight: 900,
             color: C.gold,
-            textShadow: `0 0 50px ${C.goldGlow}`,
+            textShadow: `0 0 60px ${C.goldGlow}, 0 0 120px ${C.goldDim}`,
             textAlign: "center",
-            lineHeight: 1.3,
+            lineHeight: 1.2,
           }}
         >
-          How many did YOU get right?
+          How many did YOU
+          <br />
+          get right?
         </div>
       </div>
 
-      <div style={anim(10)}>
+      <div style={anim(12)}>
         <div
           style={{
-            fontSize: 30,
+            fontSize: 36,
             fontWeight: 700,
             color: C.cyan,
-            marginTop: 24,
+            marginTop: 36,
             textShadow: `0 0 30px ${C.cyanGlow}`,
           }}
         >
@@ -112,27 +109,27 @@ export const OutroScreen: React.FC = () => {
         </div>
       </div>
 
-      <div style={anim(20)}>
+      <div style={anim(24)}>
         <div
           style={{
-            fontSize: 24,
-            fontWeight: 600,
+            fontSize: 28,
+            fontWeight: 700,
             color: C.white,
-            marginTop: 20,
+            marginTop: 28,
           }}
         >
           Don't forget to SUBSCRIBE and LIKE! 🔔👍
         </div>
       </div>
 
-      <div style={anim(30)}>
+      <div style={anim(36)}>
         <div
           style={{
-            fontSize: 20,
-            color: C.textMuted,
-            marginTop: 14,
-            letterSpacing: 2,
-            fontWeight: 600,
+            fontSize: 22,
+            color: C.textSec,
+            marginTop: 20,
+            letterSpacing: 3,
+            fontWeight: 700,
           }}
         >
           New quiz every day!
@@ -140,19 +137,19 @@ export const OutroScreen: React.FC = () => {
       </div>
 
       {/* Subscribe button with pulse */}
-      <div style={anim(40)}>
+      <div style={anim(48)}>
         <div
           style={{
-            marginTop: 44,
-            padding: "18px 50px",
+            marginTop: 50,
+            padding: "22px 70px",
             background: `linear-gradient(135deg, ${C.wrong} 0%, #FF1744 100%)`,
-            borderRadius: 14,
-            fontSize: 20,
+            borderRadius: 16,
+            fontSize: 26,
             fontWeight: 900,
             color: C.white,
-            letterSpacing: 4,
+            letterSpacing: 5,
             transform: `scale(${pulse})`,
-            boxShadow: `0 0 30px ${C.wrongGlow}, 0 4px 15px rgba(0,0,0,0.3)`,
+            boxShadow: `0 0 40px ${C.wrongGlow}, 0 6px 20px rgba(0,0,0,0.4)`,
           }}
         >
           SUBSCRIBE
@@ -160,14 +157,14 @@ export const OutroScreen: React.FC = () => {
       </div>
 
       {/* Logo at bottom */}
-      <div style={anim(50)}>
+      <div style={anim(60)}>
         <div
           style={{
-            marginTop: 50,
-            fontSize: 28,
+            marginTop: 56,
+            fontSize: 40,
             fontWeight: 900,
-            letterSpacing: 4,
-            opacity: 0.5,
+            letterSpacing: 5,
+            opacity: 0.6,
           }}
         >
           <span style={{ color: C.white }}>GUESS</span>
