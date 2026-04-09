@@ -1,17 +1,19 @@
 import React from "react";
-import { AbsoluteFill, Sequence, useCurrentFrame, spring, interpolate } from "remotion";
+import {
+  AbsoluteFill,
+  Sequence,
+  useCurrentFrame,
+  spring,
+  interpolate,
+  Audio,
+  staticFile,
+} from "remotion";
 import { QuizData, FPS, PHASE, questionFrames } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
 import { QuestionCard } from "../components/QuestionCard";
 import { OptionsGrid, AnswerReveal } from "../components/OptionsReveal";
 import { TimerRing } from "../components/TimerRing";
-
-const generateAnswerPattern = (count: number): boolean[] =>
-  Array.from({ length: count }, (_, i) => {
-    const seed = Math.sin(i * 4321 + 1234) * 10000;
-    return (seed - Math.floor(seed)) > 0.25; // ~75% correct for shorts
-  });
 
 /* Short outro with CTA */
 const ShortOutro: React.FC<{ correct: number; total: number }> = ({ correct, total }) => {
@@ -46,7 +48,7 @@ const ShortOutro: React.FC<{ correct: number; total: number }> = ({ correct, tot
           {correct}/{total}
         </div>
         <div style={{ fontSize: 22, color: C.cyan, fontWeight: 700, marginTop: 8 }}>
-          {correct === total ? "PERFECT! 🏆" : correct >= total * 0.6 ? "NICE! 🎯" : "TRY AGAIN! 💪"}
+          {correct === total ? "PERFECT!" : correct >= total * 0.6 ? "NICE!" : "TRY AGAIN!"}
         </div>
         <div
           style={{
@@ -57,10 +59,10 @@ const ShortOutro: React.FC<{ correct: number; total: number }> = ({ correct, tot
             textAlign: "center",
           }}
         >
-          Think you can beat 200?
+          Want the full 50-question challenge?
         </div>
         <div style={{ fontSize: 22, color: C.cyan, fontWeight: 900, marginTop: 8 }}>
-          👆 Full quiz on channel
+          Full quiz on channel
         </div>
         <div
           style={{
@@ -81,14 +83,13 @@ const ShortOutro: React.FC<{ correct: number; total: number }> = ({ correct, tot
   );
 };
 
-/* Question scene for shorts (simplified) */
+/* Question scene for shorts */
 const ShortQuestion: React.FC<{
   question: QuizData["questions"][0];
   num: number;
   total: number;
   category: string;
-  isCorrect: boolean;
-}> = ({ question, num, total, category, isCorrect }) => {
+}> = ({ question, num, total, category }) => {
   const frame = useCurrentFrame();
   const enterEnd = PHASE.enter;
   const timerEnd = enterEnd + PHASE.timer(question.timerSeconds);
@@ -115,8 +116,14 @@ const ShortQuestion: React.FC<{
         <TimerRing timerSeconds={question.timerSeconds} startFrame={enterEnd} />
       )}
       {phase === "reveal" && (
-        <AnswerReveal isCorrect={isCorrect} points={100} showFact={false} />
+        <Sequence from={timerEnd} durationInFrames={PHASE.reveal}>
+          <AnswerReveal isCorrect points={100} showFact={false} />
+        </Sequence>
       )}
+      {/* Correct ding on reveal */}
+      <Sequence from={timerEnd} durationInFrames={FPS}>
+        <Audio src={staticFile("audio/correct.wav")} volume={0.5} />
+      </Sequence>
     </AbsoluteFill>
   );
 };
@@ -125,8 +132,7 @@ const ShortQuestion: React.FC<{
 export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   const { questions, category } = quizData;
   const shorts = questions.slice(0, 5);
-  const answers = generateAnswerPattern(shorts.length);
-  const correctCount = answers.filter(Boolean).length;
+  const correctCount = shorts.length; // all correct
 
   let offset = 0;
   const offsets = shorts.map((q) => {
@@ -152,7 +158,7 @@ export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
           fontWeight: 900,
           letterSpacing: 2,
           color: C.white,
-          opacity: 0.1,
+          opacity: 0.25,
           zIndex: 100,
         }}
       >
@@ -166,7 +172,6 @@ export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
             num={i + 1}
             total={shorts.length}
             category={category}
-            isCorrect={answers[i]}
           />
         </Sequence>
       ))}

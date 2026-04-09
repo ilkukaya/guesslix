@@ -25,11 +25,11 @@ export const FPS = 30;
 
 // Timing for each question phase (in frames)
 export const PHASE = {
-  enter: 12,
+  enter: 15,
   timer: (sec: number) => sec * FPS,
-  reveal: 54,
-  funFact: 75,
-  transition: 9,
+  reveal: 60,
+  funFact: 90,
+  transition: 12,
 };
 
 export function questionFrames(q: QuizQuestion, showFact: boolean) {

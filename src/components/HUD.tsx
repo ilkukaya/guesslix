@@ -13,7 +13,7 @@ export const Watermark: React.FC = () => (
       fontWeight: 900,
       letterSpacing: 3,
       color: C.white,
-      opacity: 0.12,
+      opacity: 0.3,
       zIndex: 100,
     }}
   >

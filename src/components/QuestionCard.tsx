@@ -2,6 +2,7 @@ import React from "react";
 import { useCurrentFrame, spring, interpolate } from "remotion";
 import { C, FONT } from "../themes/tokens";
 import { QuizQuestion, FPS } from "../types";
+import { FlagImage } from "./FlagImage";
 
 interface Props {
   question: QuizQuestion;
@@ -22,6 +23,16 @@ export const QuestionCard: React.FC<Props> = ({
   const enterProgress = spring({ frame, fps: FPS, config: { damping: 18 } });
   const y = interpolate(enterProgress, [0, 1], [60, 0]);
   const opacity = interpolate(enterProgress, [0, 1], [0, 1]);
+
+  // Difficulty badge color
+  const diffColor =
+    question.difficulty === "easy"
+      ? C.correct
+      : question.difficulty === "medium"
+        ? C.gold
+        : question.difficulty === "hard"
+          ? "#FF8C00"
+          : C.wrong;
 
   return (
     <div
@@ -48,16 +59,38 @@ export const QuestionCard: React.FC<Props> = ({
         {category.replace(/_/g, " ")}
       </div>
 
-      {/* Question number */}
+      {/* Question number + difficulty */}
       <div
         style={{
-          fontSize: 18,
-          fontWeight: 700,
-          color: C.cyan,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
           marginTop: 6,
         }}
       >
-        QUESTION {questionNumber} / {totalQuestions}
+        <div
+          style={{
+            fontSize: 18,
+            fontWeight: 700,
+            color: C.cyan,
+          }}
+        >
+          QUESTION {questionNumber} / {totalQuestions}
+        </div>
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 900,
+            color: diffColor,
+            letterSpacing: 2,
+            padding: "3px 10px",
+            borderRadius: 6,
+            border: `1px solid ${diffColor}`,
+            textTransform: "uppercase",
+          }}
+        >
+          {question.difficulty}
+        </div>
       </div>
 
       {/* Question text */}
@@ -75,18 +108,8 @@ export const QuestionCard: React.FC<Props> = ({
         {question.questionText}
       </div>
 
-      {/* Emoji / media */}
-      {question.emoji && (
-        <div
-          style={{
-            fontSize: 120,
-            marginTop: 30,
-            filter: `drop-shadow(0 0 20px ${C.cyanGlow})`,
-          }}
-        >
-          {question.emoji}
-        </div>
-      )}
+      {/* Flag image from CDN */}
+      {question.emoji && <FlagImage emoji={question.emoji} size={240} />}
     </div>
   );
 };

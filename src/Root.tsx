@@ -5,8 +5,8 @@ import { FPS, questionFrames } from "./types";
 import sampleData from "./data/sample-flags.json";
 
 const calcTotal = (questions: any[], isLong: boolean) => {
-  const intro = isLong ? 20 : 0;
-  const outro = isLong ? 300 : 90;
+  const intro = isLong ? 90 : 0; // 3s intro for long
+  const outro = isLong ? 450 : 90; // 15s outro for long, 3s for short
   const qs = isLong ? questions : questions.slice(0, 5);
   const qFrames = qs.reduce(
     (sum: number, q: any) => sum + questionFrames(q, isLong && !!q.funFact),

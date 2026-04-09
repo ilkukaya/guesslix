@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame, spring, interpolate } from "remotion";
 import { C, FONT } from "../themes/tokens";
-import { FPS } from "../types";
+import { FPS, PHASE } from "../types";
 
 /* ===== OPTIONS GRID ===== */
 interface OptionsProps {
@@ -43,10 +43,10 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
         const isCorrect = i === correctIndex;
         const revealed = revealState === "shown";
 
-        let bg = C.border;
-        let borderColor = "rgba(255,255,255,0.08)";
-        let textColor = C.textSec;
-        let shadow = "none";
+        let bg: string = C.border;
+        let borderColor: string = "rgba(255,255,255,0.08)";
+        let textColor: string = C.textSec;
+        let shadow: string = "none";
         let dimmed = false;
 
         if (revealed) {
@@ -136,7 +136,7 @@ export const AnswerReveal: React.FC<RevealProps> = ({
   const scale = interpolate(pop, [0, 1], [0.5, 1]);
   const opacity = interpolate(pop, [0, 1], [0, 1]);
 
-  // Points float up
+  // Points float up (relative to this component's mount time)
   const pointsY = interpolate(frame, [0, 40], [0, -40], {
     extrapolateRight: "clamp",
   });
@@ -144,9 +144,19 @@ export const AnswerReveal: React.FC<RevealProps> = ({
     extrapolateRight: "clamp",
   });
 
-  // Fun fact fade
+  // Fun fact fades in after the reveal text settles
+  const revealFrames = PHASE.reveal;
   const factOpacity = showFact
-    ? interpolate(frame, [50, 65], [0, 1], { extrapolateRight: "clamp" })
+    ? interpolate(frame, [revealFrames, revealFrames + 15], [0, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 0;
+  const factY = showFact
+    ? interpolate(frame, [revealFrames, revealFrames + 15], [20, 0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
     : 0;
 
   return (
@@ -209,9 +219,11 @@ export const AnswerReveal: React.FC<RevealProps> = ({
             textAlign: "center",
             lineHeight: 1.5,
             opacity: factOpacity,
+            transform: `translateY(${factY}px)`,
           }}
         >
-          💡 {funFact}
+          <span style={{ color: C.gold, marginRight: 8 }}>💡</span>
+          {funFact}
         </div>
       )}
     </div>
