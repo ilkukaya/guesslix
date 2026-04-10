@@ -4,8 +4,8 @@
   "description": "Guesslix — Programmatic quiz video generation",
   "scripts": {
     "dev": "remotion studio",
-    "render:long": "remotion render LongQuiz out/long-quiz.mp4",
-    "render:short": "remotion render ShortQuiz out/short-quiz.mp4"
+    "render:long": "remotion render LongQuiz",
+    "render:short": "remotion render ShortQuiz"
   },
   "dependencies": {
     "@remotion/cli": "4.0.242",

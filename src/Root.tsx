@@ -2,7 +2,7 @@ import { Composition } from "remotion";
 import { LongQuiz } from "./compositions/LongQuiz";
 import { ShortQuiz, SHORT_TOTAL_FRAMES } from "./compositions/ShortQuiz";
 import { FPS, calcLongDuration } from "./types";
-import sampleData from "./data/sample-flags.json";
+import sampleData from "./data/active-quiz.json";
 
 export const RemotionRoot: React.FC = () => {
   return (
