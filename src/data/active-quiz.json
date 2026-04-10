@@ -1,0 +1,815 @@
+{
+  "quizId": "flags-world-001",
+  "category": "guess_the_flag",
+  "format": "emoji_flags",
+  "videoType": "long",
+  "language": "en",
+  "totalQuestions": 50,
+  "style": {
+    "theme": "space",
+    "colorAccent": "#00E5FF",
+    "musicProfile": "epic_rising"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "type": "emoji_flag",
+      "emoji": "🇯🇵",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "China",
+        "Japan",
+        "South Korea",
+        "Indonesia"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Japan's flag is called 'Nisshōki' — the red circle represents the rising sun."
+    },
+    {
+      "id": 2,
+      "type": "emoji_flag",
+      "emoji": "🇧🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Portugal",
+        "Brazil",
+        "Colombia",
+        "Argentina"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Brazil's flag motto reads 'Ordem e Progresso' — Order and Progress."
+    },
+    {
+      "id": 3,
+      "type": "emoji_flag",
+      "emoji": "🇺🇸",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "United Kingdom",
+        "Australia",
+        "United States",
+        "France"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "The US flag has 50 stars for 50 states and 13 stripes for the original colonies."
+    },
+    {
+      "id": 4,
+      "type": "emoji_flag",
+      "emoji": "🇬🇧",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Australia",
+        "New Zealand",
+        "United Kingdom",
+        "Iceland"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "The Union Jack combines the crosses of St George, St Andrew, and St Patrick."
+    },
+    {
+      "id": 5,
+      "type": "emoji_flag",
+      "emoji": "🇨🇦",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Canada",
+        "Switzerland",
+        "Peru",
+        "Denmark"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Canada's maple leaf flag was only adopted in 1965 — it's younger than most think!"
+    },
+    {
+      "id": 6,
+      "type": "emoji_flag",
+      "emoji": "🇫🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Netherlands",
+        "Luxembourg",
+        "France",
+        "Romania"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "The French tricolor inspired many other nations' flags after the Revolution."
+    },
+    {
+      "id": 7,
+      "type": "emoji_flag",
+      "emoji": "🇩🇪",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Belgium",
+        "Germany",
+        "Austria",
+        "Yemen"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Germany's black-red-gold colors date back to the early 19th century democratic movement."
+    },
+    {
+      "id": 8,
+      "type": "emoji_flag",
+      "emoji": "🇮🇹",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Ireland",
+        "Mexico",
+        "Italy",
+        "Hungary"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Italy's green, white, and red tricolor was inspired by the French flag during Napoleon's era."
+    },
+    {
+      "id": 9,
+      "type": "emoji_flag",
+      "emoji": "🇨🇳",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Vietnam",
+        "China",
+        "Turkey",
+        "Morocco"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "China's large star represents the Communist Party; the four small stars represent the people."
+    },
+    {
+      "id": 10,
+      "type": "emoji_flag",
+      "emoji": "🇦🇺",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "New Zealand",
+        "Australia",
+        "Fiji",
+        "Tuvalu"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Australia's flag features the Southern Cross constellation and a Commonwealth Star."
+    },
+    {
+      "id": 11,
+      "type": "emoji_flag",
+      "emoji": "🇮🇳",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Niger",
+        "India",
+        "Ireland",
+        "Ivory Coast"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "India's Ashoka Chakra in the center has 24 spokes representing 24 hours of the day."
+    },
+    {
+      "id": 12,
+      "type": "emoji_flag",
+      "emoji": "🇹🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Tunisia",
+        "Turkey",
+        "Pakistan",
+        "Algeria"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "The Turkish crescent and star design dates back to the Ottoman Empire era."
+    },
+    {
+      "id": 13,
+      "type": "emoji_flag",
+      "emoji": "🇲🇽",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Italy",
+        "Mexico",
+        "Ireland",
+        "Hungary"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Mexico's coat of arms shows an eagle eating a snake on a cactus — from Aztec legend."
+    },
+    {
+      "id": 14,
+      "type": "emoji_flag",
+      "emoji": "🇰🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "North Korea",
+        "Japan",
+        "South Korea",
+        "Vietnam"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "The Korean flag's yin-yang symbol represents the balance of cosmic forces."
+    },
+    {
+      "id": 15,
+      "type": "emoji_flag",
+      "emoji": "🇪🇸",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Portugal",
+        "Spain",
+        "Andorra",
+        "Catalonia"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 5,
+      "difficulty": "easy",
+      "funFact": "Spain's coat of arms on the flag includes the Pillars of Hercules with 'Plus Ultra' motto."
+    },
+    {
+      "id": 16,
+      "type": "emoji_flag",
+      "emoji": "🇳🇴",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Denmark",
+        "Iceland",
+        "Norway",
+        "Finland"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Norway's flag uses the Scandinavian cross shared by all Nordic countries."
+    },
+    {
+      "id": 17,
+      "type": "emoji_flag",
+      "emoji": "🇿🇦",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Kenya",
+        "South Africa",
+        "Ghana",
+        "Nigeria"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "South Africa's flag has 6 colors — the most of any national flag without a seal or emblem."
+    },
+    {
+      "id": 18,
+      "type": "emoji_flag",
+      "emoji": "🇸🇪",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Finland",
+        "Sweden",
+        "Ukraine",
+        "Palau"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Sweden's blue and gold flag dates to at least the 16th century reign of King Gustav Vasa."
+    },
+    {
+      "id": 19,
+      "type": "emoji_flag",
+      "emoji": "🇬🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Greece",
+        "Finland",
+        "Israel",
+        "Uruguay"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Greece's 9 stripes may represent the syllables in 'Freedom or Death' in Greek."
+    },
+    {
+      "id": 20,
+      "type": "emoji_flag",
+      "emoji": "🇦🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Uruguay",
+        "Argentina",
+        "Guatemala",
+        "Honduras"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Argentina's Sun of May on the flag represents the Inca sun god Inti."
+    },
+    {
+      "id": 21,
+      "type": "emoji_flag",
+      "emoji": "🇹🇭",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Costa Rica",
+        "Thailand",
+        "Cambodia",
+        "Laos"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Thailand's flag stripes represent nation (red), religion (white), and monarchy (blue)."
+    },
+    {
+      "id": 22,
+      "type": "emoji_flag",
+      "emoji": "🇪🇬",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Syria",
+        "Iraq",
+        "Egypt",
+        "Yemen"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Egypt's golden Eagle of Saladin in the center is a symbol of Arab nationalism."
+    },
+    {
+      "id": 23,
+      "type": "emoji_flag",
+      "emoji": "🇵🇹",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Brazil",
+        "Portugal",
+        "Italy",
+        "Mexico"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Portugal's armillary sphere on the flag symbolizes the Age of Discoveries."
+    },
+    {
+      "id": 24,
+      "type": "emoji_flag",
+      "emoji": "🇮🇱",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Greece",
+        "Israel",
+        "Honduras",
+        "Argentina"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Israel's Star of David flag was inspired by the traditional Jewish prayer shawl (tallit)."
+    },
+    {
+      "id": 25,
+      "type": "emoji_flag",
+      "emoji": "🇨🇭",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Denmark",
+        "Switzerland",
+        "Austria",
+        "Tonga"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Switzerland has one of only two square sovereign-state flags — the other is Vatican City's."
+    },
+    {
+      "id": 26,
+      "type": "emoji_flag",
+      "emoji": "🇯🇲",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Jamaica",
+        "South Africa",
+        "Guyana",
+        "Tanzania"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Jamaica's flag is the only national flag that doesn't feature red, white, or blue."
+    },
+    {
+      "id": 27,
+      "type": "emoji_flag",
+      "emoji": "🇵🇭",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Cuba",
+        "Czech Republic",
+        "Philippines",
+        "Puerto Rico"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "When the Philippines is at war, the flag is flown upside down with the red stripe on top."
+    },
+    {
+      "id": 28,
+      "type": "emoji_flag",
+      "emoji": "🇨🇴",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Romania",
+        "Colombia",
+        "Ecuador",
+        "Venezuela"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Colombia's yellow stripe is twice the width of the blue and red — representing gold richness."
+    },
+    {
+      "id": 29,
+      "type": "emoji_flag",
+      "emoji": "🇵🇰",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Algeria",
+        "Pakistan",
+        "Mauritania",
+        "Libya"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Pakistan's white stripe represents religious minorities; the green represents the Muslim majority."
+    },
+    {
+      "id": 30,
+      "type": "emoji_flag",
+      "emoji": "🇸🇦",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Saudi Arabia",
+        "Iran",
+        "Libya",
+        "Turkmenistan"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 6,
+      "difficulty": "medium",
+      "funFact": "Saudi Arabia's flag is never flown at half-mast because it contains the Islamic declaration of faith."
+    },
+    {
+      "id": 31,
+      "type": "emoji_flag",
+      "emoji": "🇵🇪",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Peru",
+        "Canada",
+        "Austria",
+        "Poland"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Peru's red-and-white colors were inspired by flamingos seen by liberator José de San Martín."
+    },
+    {
+      "id": 32,
+      "type": "emoji_flag",
+      "emoji": "🇧🇩",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Palau",
+        "Japan",
+        "Bangladesh",
+        "Laos"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Bangladesh's red circle is slightly off-center so it appears centered when the flag is flying."
+    },
+    {
+      "id": 33,
+      "type": "emoji_flag",
+      "emoji": "🇻🇳",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "China",
+        "Vietnam",
+        "Morocco",
+        "Turkey"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Vietnam's yellow star represents farmers, workers, soldiers, intellectuals, and youth."
+    },
+    {
+      "id": 34,
+      "type": "emoji_flag",
+      "emoji": "🇳🇵",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Nepal",
+        "Sri Lanka",
+        "Bhutan",
+        "Ohio"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Nepal has the only non-rectangular national flag — it's two stacked triangles!"
+    },
+    {
+      "id": 35,
+      "type": "emoji_flag",
+      "emoji": "🇭🇷",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Serbia",
+        "Croatia",
+        "Slovakia",
+        "Slovenia"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Croatia's checkerboard (šahovnica) coat of arms dates back to the 10th century."
+    },
+    {
+      "id": 36,
+      "type": "emoji_flag",
+      "emoji": "🇲🇦",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Vietnam",
+        "Morocco",
+        "Albania",
+        "Turkey"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Morocco's green pentagram on red is called the Seal of Solomon, a symbol of life and health."
+    },
+    {
+      "id": 37,
+      "type": "emoji_flag",
+      "emoji": "🇺🇦",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Sweden",
+        "Ukraine",
+        "Palau",
+        "Rwanda"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Ukraine's blue and yellow represent the sky over golden wheat fields of the steppe."
+    },
+    {
+      "id": 38,
+      "type": "emoji_flag",
+      "emoji": "🇨🇿",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Philippines",
+        "Czech Republic",
+        "Cuba",
+        "Puerto Rico"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "The Czech flag was originally the flag of Czechoslovakia — they kept it after the split in 1993."
+    },
+    {
+      "id": 39,
+      "type": "emoji_flag",
+      "emoji": "🇨🇱",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Texas",
+        "Chile",
+        "Cuba",
+        "Panama"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Chile's flag is often confused with the Texas state flag — Chile's came first by 28 years!"
+    },
+    {
+      "id": 40,
+      "type": "emoji_flag",
+      "emoji": "🇰🇪",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "South Sudan",
+        "Kenya",
+        "Malawi",
+        "Mozambique"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 7,
+      "difficulty": "hard",
+      "funFact": "Kenya's Maasai shield and spears on the flag represent the defense of freedom."
+    },
+    {
+      "id": 41,
+      "type": "emoji_flag",
+      "emoji": "🇲🇳",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Mongolia",
+        "Myanmar",
+        "Mozambique",
+        "Madagascar"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Mongolia's Soyombo symbol represents fire, sun, moon, earth, water, and the yin-yang."
+    },
+    {
+      "id": 42,
+      "type": "emoji_flag",
+      "emoji": "🇱🇮",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Haiti",
+        "Luxembourg",
+        "Liechtenstein",
+        "Netherlands"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Liechtenstein added a crown after discovering their flag matched Haiti's at the 1936 Olympics."
+    },
+    {
+      "id": 43,
+      "type": "emoji_flag",
+      "emoji": "🇧🇹",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Bhutan",
+        "Sri Lanka",
+        "Wales",
+        "Malta"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Bhutan's dragon holds jewels representing wealth; the thunder dragon is called 'Druk'."
+    },
+    {
+      "id": 44,
+      "type": "emoji_flag",
+      "emoji": "🇲🇿",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Mozambique",
+        "Zimbabwe",
+        "Zambia",
+        "Malawi"
+      ],
+      "correctIndex": 0,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Mozambique's flag features an AK-47 — the only national flag with a modern firearm."
+    },
+    {
+      "id": 45,
+      "type": "emoji_flag",
+      "emoji": "🇸🇿",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Lesotho",
+        "Eswatini",
+        "Uganda",
+        "Botswana"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Eswatini (formerly Swaziland) features a Nguni shield and spears representing protection."
+    },
+    {
+      "id": 46,
+      "type": "emoji_flag",
+      "emoji": "🇰🇮",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Fiji",
+        "Tuvalu",
+        "Kiribati",
+        "Marshall Islands"
+      ],
+      "correctIndex": 2,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Kiribati's frigatebird flying over the ocean sunrise represents freedom and power."
+    },
+    {
+      "id": 47,
+      "type": "emoji_flag",
+      "emoji": "🇵🇼",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Bangladesh",
+        "Palau",
+        "Japan",
+        "Laos"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Palau's yellow circle represents the full moon, which locals believe is the best time for activity."
+    },
+    {
+      "id": 48,
+      "type": "emoji_flag",
+      "emoji": "🇰🇲",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Djibouti",
+        "Comoros",
+        "Mauritius",
+        "Seychelles"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Comoros' 4 stripes represent its 4 islands: Ngazidja, Mwali, Ndzuani, and Maore (Mayotte)."
+    },
+    {
+      "id": 49,
+      "type": "emoji_flag",
+      "emoji": "🇸🇨",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "South Africa",
+        "Seychelles",
+        "Mauritius",
+        "Eritrea"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Seychelles' flag has radiating bands from one corner — symbolizing a new nation expanding into the future."
+    },
+    {
+      "id": 50,
+      "type": "emoji_flag",
+      "emoji": "🇧🇳",
+      "questionText": "Which country's flag is this?",
+      "options": [
+        "Malaysia",
+        "Brunei",
+        "Cambodia",
+        "Laos"
+      ],
+      "correctIndex": 1,
+      "timerSeconds": 8,
+      "difficulty": "impossible",
+      "funFact": "Brunei's emblem features hands and a crescent — the motto translates to 'Always render service with God's guidance'."
+    }
+  ]
+}
