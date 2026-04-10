@@ -45,10 +45,13 @@ const INTRO_FLAGS = [
   { code: "kr", x: 60, y: 22, rot: 5 },
 ];
 
-const IntroSequence: React.FC = () => {
+const IntroSequence: React.FC<{ category: string }> = ({ category }) => {
   const frame = useCurrentFrame();
   const P1_END = 90;
   const P2_END = 150;
+
+  const isFlags = category.includes("flag");
+  const categoryLabel = category.replace(/_/g, " ").toUpperCase();
 
   const logoSpring = spring({ frame, fps: FPS, config: { damping: 12 } });
   const logoBaseScale = interpolate(logoSpring, [0, 1], [0.8, 1]);
@@ -71,6 +74,13 @@ const IntroSequence: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
+  // Generic "?" bubble positions (used when not flags)
+  const BUBBLE_POS = [
+    { x: 12, y: 20 }, { x: 78, y: 15 }, { x: 45, y: 55 }, { x: 20, y: 65 },
+    { x: 70, y: 60 }, { x: 35, y: 30 }, { x: 85, y: 45 }, { x: 55, y: 75 },
+    { x: 8, y: 45 }, { x: 62, y: 22 },
+  ];
+
   return (
     <AbsoluteFill style={{ background: C.bg, fontFamily: FONT }}>
       <div
@@ -86,6 +96,7 @@ const IntroSequence: React.FC = () => {
           opacity: 0.5,
         }}
       />
+      {/* GUESSLIX Logo */}
       <div
         style={{
           position: "absolute",
@@ -103,6 +114,7 @@ const IntroSequence: React.FC = () => {
           <span style={{ color: C.gold, marginLeft: 10 }}>?</span>
         </div>
       </div>
+      {/* Category title — dynamic from JSON */}
       {frame >= P1_END && (
         <div
           style={{
@@ -124,11 +136,12 @@ const IntroSequence: React.FC = () => {
               letterSpacing: 10,
             }}
           >
-            GUESS THE FLAG
+            {categoryLabel}
           </div>
         </div>
       )}
-      {frame >= P2_END &&
+      {/* Phase 3: Flag images (flag category) or "?" bubbles (generic) */}
+      {frame >= P2_END && isFlags &&
         INTRO_FLAGS.map((flag, i) => {
           const flagFrame = Math.max(0, frame - P2_END - i * 5);
           const fSpring = spring({ frame: flagFrame, fps: FPS, config: { damping: 12 } });
@@ -136,36 +149,21 @@ const IntroSequence: React.FC = () => {
           const fOpacity = interpolate(fSpring, [0, 1], [0, 0.85]);
           const wobble = Math.sin(frame * 0.08 + i * 2) * 3;
           return (
-            <div
-              key={flag.code}
-              style={{
-                position: "absolute",
-                left: `${flag.x}%`,
-                top: `${flag.y}%`,
-                transform: `scale(${fScale}) rotate(${flag.rot + wobble}deg)`,
-                opacity: fOpacity,
-              }}
-            >
-              <Img
-                src={`https://flagcdn.com/w160/${flag.code}.png`}
-                width={120}
-                style={{ borderRadius: 8, boxShadow: "0 4px 20px rgba(0,0,0,0.5)" }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 60,
-                  fontWeight: 900,
-                  color: C.gold,
-                  textShadow: "0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(255,215,0,0.3)",
-                }}
-              >
-                ?
-              </div>
+            <div key={flag.code} style={{ position: "absolute", left: `${flag.x}%`, top: `${flag.y}%`, transform: `scale(${fScale}) rotate(${flag.rot + wobble}deg)`, opacity: fOpacity }}>
+              <Img src={`https://flagcdn.com/w160/${flag.code}.png`} width={120} style={{ borderRadius: 8, boxShadow: "0 4px 20px rgba(0,0,0,0.5)" }} />
+              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 60, fontWeight: 900, color: C.gold, textShadow: "0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(255,215,0,0.3)" }}>?</div>
+            </div>
+          );
+        })}
+      {frame >= P2_END && !isFlags &&
+        BUBBLE_POS.map((pos, i) => {
+          const bFrame = Math.max(0, frame - P2_END - i * 4);
+          const bSpring = spring({ frame: bFrame, fps: FPS, config: { damping: 12 } });
+          const bScale = interpolate(bSpring, [0, 1], [0, 1]);
+          const bOpacity = interpolate(bSpring, [0, 1], [0, 0.7]);
+          return (
+            <div key={i} style={{ position: "absolute", left: `${pos.x}%`, top: `${pos.y}%`, transform: `scale(${bScale})`, opacity: bOpacity, width: 70, height: 70, borderRadius: "50%", background: C.bgSurface, border: `2px solid ${C.borderCyan}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, fontWeight: 900, color: C.gold }}>
+              ?
             </div>
           );
         })}
@@ -518,6 +516,7 @@ const QuestionScene: React.FC<QuestionSceneProps> = ({
         questionNumber={questionNumber}
         totalQuestions={totalQuestions}
         category={category}
+        isRevealed={isRevealPhase}
       />
 
       <div style={{ position: "absolute", bottom: 120, left: 0, right: 0 }}>
@@ -621,7 +620,7 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
       <Watermark />
 
       <Sequence from={0} durationInFrames={INTRO_FRAMES}>
-        <IntroSequence />
+        <IntroSequence category={category} />
       </Sequence>
 
       {transitions.map((t, i) => (

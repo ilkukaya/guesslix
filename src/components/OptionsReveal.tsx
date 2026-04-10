@@ -3,7 +3,7 @@ import { useCurrentFrame, spring, interpolate } from "remotion";
 import { C, FONT } from "../themes/tokens";
 import { FPS, PHASE } from "../types";
 
-/* ===== OPTIONS GRID ===== */
+/* ===== OPTIONS GRID (supports 2 or 4 options) ===== */
 interface OptionsProps {
   options: string[];
   revealState: "hidden" | "shown";
@@ -20,14 +20,22 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
   isShort,
 }) => {
   const frame = useCurrentFrame();
+  const isTwoOptions = options.length <= 2;
+
+  // For 2 options: side by side row. For 4: 2x2 grid (long) or column (short)
+  const gridCols = isTwoOptions
+    ? "1fr 1fr"
+    : isShort
+      ? "1fr"
+      : "1fr 1fr";
 
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: isShort ? "1fr" : "1fr 1fr",
+        gridTemplateColumns: gridCols,
         gap: isShort ? 14 : 18,
-        width: isShort ? "85%" : "70%",
+        width: isShort ? "85%" : isTwoOptions ? "60%" : "70%",
         margin: "0 auto",
         fontFamily: FONT,
       }}
@@ -58,14 +66,23 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
           }
         }
 
+        // For 2-option layout, make buttons bigger
+        const padding = isTwoOptions
+          ? isShort ? "24px 20px" : "28px 32px"
+          : isShort ? "18px 20px" : "22px 28px";
+        const fontSize = isTwoOptions
+          ? isShort ? 28 : 30
+          : isShort ? 22 : 26;
+
         return (
           <div
             key={i}
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent: isTwoOptions ? "center" : "flex-start",
               gap: 14,
-              padding: isShort ? "18px 20px" : "22px 28px",
+              padding,
               borderRadius: 14,
               background: bg,
               border: `1.5px solid ${borderColor}`,
@@ -75,6 +92,7 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
               transition: "all 0.3s ease",
             }}
           >
+            {/* Letter badge */}
             <div
               style={{
                 width: 34,
@@ -96,7 +114,7 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
             </div>
             <span
               style={{
-                fontSize: isShort ? 22 : 26,
+                fontSize,
                 fontWeight: 700,
                 color: textColor,
                 letterSpacing: 1,
@@ -112,7 +130,7 @@ export const OptionsGrid: React.FC<OptionsProps> = ({
   );
 };
 
-/* ===== FUN FACT OVERLAY (no score/correct text) ===== */
+/* ===== FUN FACT OVERLAY ===== */
 interface FunFactProps {
   funFact?: string;
   showFact: boolean;
@@ -120,8 +138,6 @@ interface FunFactProps {
 
 export const FunFactOverlay: React.FC<FunFactProps> = ({ funFact, showFact }) => {
   const frame = useCurrentFrame();
-
-  // Fun fact fades in after the initial reveal pause
   const revealFrames = PHASE.reveal;
   const factOpacity = showFact
     ? interpolate(frame, [revealFrames, revealFrames + 15], [0, 1], {

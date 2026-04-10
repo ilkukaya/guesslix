@@ -9,11 +9,10 @@ import {
   Audio,
   staticFile,
 } from "remotion";
-import { QuizData, QuizQuestion, FPS } from "../types";
+import { QuizData, QuizQuestion, FPS, resolveType } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
-import { FlagImage } from "../components/FlagImage";
-import { emojiToCountryCode } from "../components/FlagImage";
+import { QuestionVisual } from "../components/QuestionVisual";
 
 /* ================================================================
    SHORTS TIMING (frames @ 30fps)
@@ -192,7 +191,7 @@ const ShortsOptions: React.FC<{
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: options.length <= 2 ? "row" : "column",
         gap: 12,
         width: "100%",
         paddingLeft: 40,
@@ -340,14 +339,9 @@ const ShortQuestion: React.FC<{
   const badge = DIFF_BADGE[question.difficulty] || DIFF_BADGE.easy;
   const gradient = DIFF_GRADIENT[question.difficulty] || "transparent";
 
-  // Flag image
-  const code = question.emoji ? emojiToCountryCode(question.emoji).toLowerCase() : "";
-  const flagSrc = `https://flagcdn.com/w640/${code}.png`;
-
-  // Flag pop-in
-  const flagSpring = spring({ frame, fps: FPS, config: { damping: 10, mass: 0.6 } });
-  const flagScale = interpolate(flagSpring, [0, 1], [0.4, 1]);
-  const flagOpacity = interpolate(flagSpring, [0, 1], [0, 1]);
+  const isRevealed = phase === "reveal";
+  const qType = resolveType(question);
+  const isTextOnly = qType === "text_only";
 
   return (
     <AbsoluteFill>
@@ -394,14 +388,14 @@ const ShortQuestion: React.FC<{
           </div>
         </div>
 
-        {/* Question text — BIG */}
+        {/* Question text — BIG (bigger if text_only) */}
         <div
           style={{
-            fontSize: 48,
+            fontSize: isTextOnly ? 56 : 48,
             fontWeight: 900,
             color: C.white,
             textAlign: "center",
-            marginTop: 20,
+            marginTop: isTextOnly ? 40 : 20,
             lineHeight: 1.15,
             paddingLeft: 40,
             paddingRight: 40,
@@ -410,26 +404,13 @@ const ShortQuestion: React.FC<{
           {question.questionText}
         </div>
 
-        {/* Flag — HUGE, explosive pop-in */}
-        {question.emoji && (
-          <div
-            style={{
-              marginTop: 20,
-              transform: `scale(${flagScale})`,
-              opacity: flagOpacity,
-            }}
-          >
-            <Img
-              src={flagSrc}
-              width={420}
-              style={{
-                borderRadius: 16,
-                boxShadow: `0 0 60px ${C.cyanGlow}, 0 0 120px rgba(0,229,255,0.12), 0 8px 40px rgba(0,0,0,0.6)`,
-                border: `2px solid ${C.borderCyan}`,
-              }}
-            />
-          </div>
-        )}
+        {/* Visual — type-based (QuestionVisual handles the switch) */}
+        <QuestionVisual
+          question={question}
+          size={420}
+          enterDuration={S.Q_ENTER}
+          isRevealed={isRevealed}
+        />
 
         {/* Timer — centered below flag, spinning glow ring */}
         {phase === "timer" && (

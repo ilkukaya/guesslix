@@ -1,14 +1,15 @@
 import React from "react";
 import { useCurrentFrame, spring, interpolate } from "remotion";
 import { C, FONT } from "../themes/tokens";
-import { QuizQuestion, FPS } from "../types";
-import { FlagImage } from "./FlagImage";
+import { QuizQuestion, FPS, PHASE, resolveType } from "../types";
+import { QuestionVisual } from "./QuestionVisual";
 
 interface Props {
   question: QuizQuestion;
   questionNumber: number;
   totalQuestions: number;
   category: string;
+  isRevealed?: boolean;
 }
 
 export const QuestionCard: React.FC<Props> = ({
@@ -16,8 +17,10 @@ export const QuestionCard: React.FC<Props> = ({
   questionNumber,
   totalQuestions,
   category,
+  isRevealed = false,
 }) => {
   const frame = useCurrentFrame();
+  const type = resolveType(question);
 
   const enterProgress = spring({ frame, fps: FPS, config: { damping: 18 } });
   const y = interpolate(enterProgress, [0, 1], [60, 0]);
@@ -31,6 +34,10 @@ export const QuestionCard: React.FC<Props> = ({
         : question.difficulty === "hard"
           ? "#FF8C00"
           : C.wrong;
+
+  // text_only: bigger question text, no visual
+  const isTextOnly = type === "text_only";
+  const questionFontSize = isTextOnly ? 56 : 42;
 
   return (
     <div
@@ -58,21 +65,8 @@ export const QuestionCard: React.FC<Props> = ({
       </div>
 
       {/* Question number + difficulty */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          marginTop: 4,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 20,
-            fontWeight: 700,
-            color: C.cyan,
-          }}
-        >
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 4 }}>
+        <div style={{ fontSize: 20, fontWeight: 700, color: C.cyan }}>
           QUESTION {questionNumber} / {totalQuestions}
         </div>
         <div
@@ -94,11 +88,11 @@ export const QuestionCard: React.FC<Props> = ({
       {/* Question text */}
       <div
         style={{
-          fontSize: 42,
+          fontSize: questionFontSize,
           fontWeight: 900,
           color: C.white,
           textAlign: "center",
-          marginTop: 20,
+          marginTop: isTextOnly ? 60 : 20,
           maxWidth: 900,
           lineHeight: 1.2,
         }}
@@ -106,8 +100,13 @@ export const QuestionCard: React.FC<Props> = ({
         {question.questionText}
       </div>
 
-      {/* Flag image — 320px wide */}
-      {question.emoji && <FlagImage emoji={question.emoji} size={320} />}
+      {/* Visual — type-based (QuestionVisual handles the switch) */}
+      <QuestionVisual
+        question={question}
+        size={320}
+        enterDuration={PHASE.enter}
+        isRevealed={isRevealed}
+      />
     </div>
   );
 };

@@ -1,14 +1,52 @@
+/* ================================================================
+   QUESTION TYPES — JSON "type" field determines visual + layout
+   ================================================================ */
+
+export type QuestionType =
+  | "emoji_flag" // Flag quiz — emoji → flagcdn image
+  | "image_guess" // Logo, food, animal, landmark — URL image
+  | "emoji_decode" // 🎬🦁👑 = which movie? — big emoji string
+  | "text_only" // GK, scrambled name — text question only
+  | "zoomed" // Zoomed image — starts zoomed in, slowly reveals
+  | "blurred" // Blurred image — starts blurry, slowly clears
+  | "silhouette" // Silhouette — black shape, reveals on answer
+  | "find_odd" // 3x3 grid, find the different one
+  | "true_false" // True/False — 2 options
+  | "comparison"; // A vs B — two items side by side
+
+/* ================================================================
+   QUIZ QUESTION — universal interface for all types
+   ================================================================ */
+
 export interface QuizQuestion {
   id: number;
-  type: "emoji_decode" | "image_guess" | "text_guess";
-  emoji?: string;
+  type: QuestionType;
+
+  // Visual sources (used based on type)
+  emoji?: string; // emoji_flag: 🇯🇵
+  emojiClue?: string; // emoji_decode: 🎬🦁👑
+  imageUrl?: string; // image_guess, zoomed, blurred, silhouette
+
+  // Find the Odd
+  gridItems?: string[]; // 9 emojis or image URLs
+  oddIndex?: number; // index of the odd one
+
+  // Comparison (A vs B)
+  itemA?: { label: string; value?: string; imageUrl?: string };
+  itemB?: { label: string; value?: string; imageUrl?: string };
+
+  // Common fields
   questionText: string;
-  options: string[];
+  options: string[]; // 4 options (normal) or 2 options (true_false, comparison)
   correctIndex: number;
   timerSeconds: number;
   difficulty: "easy" | "medium" | "hard" | "impossible";
   funFact?: string;
 }
+
+/* ================================================================
+   QUIZ DATA — top-level structure
+   ================================================================ */
 
 export interface QuizData {
   quizId: string;
@@ -21,9 +59,12 @@ export interface QuizData {
   questions: QuizQuestion[];
 }
 
+/* ================================================================
+   TIMING CONSTANTS
+   ================================================================ */
+
 export const FPS = 30;
 
-// Timing for each question phase (in frames)
 export const PHASE = {
   enter: 15,
   timer: (sec: number) => sec * FPS,
@@ -32,16 +73,15 @@ export const PHASE = {
   transition: 12,
 };
 
-// Composition-level timing (in frames)
-export const INTRO_FRAMES = 240; // 8 seconds
-export const OUTRO_FRAMES = 360; // 12 seconds
-export const MINI_SPLASH_FRAMES = 24; // 0.8 seconds
+export const INTRO_FRAMES = 240;
+export const OUTRO_FRAMES = 360;
+export const MINI_SPLASH_FRAMES = 24;
 
 export const TRANSITION_FRAMES: Record<string, number> = {
-  easy: 60, // 2s
-  medium: 60, // 2s
-  hard: 60, // 2s
-  impossible: 90, // 3s
+  easy: 60,
+  medium: 60,
+  hard: 60,
+  impossible: 90,
 };
 
 export function questionFrames(q: QuizQuestion, showFact: boolean) {
@@ -54,23 +94,24 @@ export function questionFrames(q: QuizQuestion, showFact: boolean) {
   );
 }
 
-/** Calculate total duration of the long quiz including transitions and mini splashes */
 export function calcLongDuration(questions: QuizQuestion[]): number {
   let total = INTRO_FRAMES;
   let prevDifficulty = "";
-
   questions.forEach((q, i) => {
-    const isNewDifficulty = q.difficulty !== prevDifficulty;
-    if (isNewDifficulty) {
+    const isNew = q.difficulty !== prevDifficulty;
+    if (isNew) {
       total += TRANSITION_FRAMES[q.difficulty] || 60;
       prevDifficulty = q.difficulty;
     }
-    if (i > 0 && i % 4 === 0 && !isNewDifficulty) {
-      total += MINI_SPLASH_FRAMES;
-    }
+    if (i > 0 && i % 4 === 0 && !isNew) total += MINI_SPLASH_FRAMES;
     total += questionFrames(q, !!q.funFact);
   });
-
   total += OUTRO_FRAMES;
   return total;
+}
+
+/** Resolve effective type (backward compat: old emoji_decode with emoji field → emoji_flag) */
+export function resolveType(q: QuizQuestion): QuestionType {
+  if (q.type === "emoji_decode" && q.emoji && !q.emojiClue) return "emoji_flag";
+  return q.type || "emoji_flag";
 }

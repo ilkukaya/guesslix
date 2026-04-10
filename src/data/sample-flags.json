@@ -13,7 +13,7 @@
   "questions": [
     {
       "id": 1,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇯🇵",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -29,7 +29,7 @@
     },
     {
       "id": 2,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇧🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -45,7 +45,7 @@
     },
     {
       "id": 3,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇺🇸",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -61,7 +61,7 @@
     },
     {
       "id": 4,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇬🇧",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -77,7 +77,7 @@
     },
     {
       "id": 5,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇨🇦",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -93,7 +93,7 @@
     },
     {
       "id": 6,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇫🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -109,7 +109,7 @@
     },
     {
       "id": 7,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇩🇪",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -125,7 +125,7 @@
     },
     {
       "id": 8,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇮🇹",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -141,7 +141,7 @@
     },
     {
       "id": 9,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇨🇳",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -157,7 +157,7 @@
     },
     {
       "id": 10,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇦🇺",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -173,7 +173,7 @@
     },
     {
       "id": 11,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇮🇳",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -189,7 +189,7 @@
     },
     {
       "id": 12,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇹🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -205,7 +205,7 @@
     },
     {
       "id": 13,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇲🇽",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -221,7 +221,7 @@
     },
     {
       "id": 14,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇰🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -237,7 +237,7 @@
     },
     {
       "id": 15,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇪🇸",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -253,7 +253,7 @@
     },
     {
       "id": 16,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇳🇴",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -269,7 +269,7 @@
     },
     {
       "id": 17,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇿🇦",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -285,7 +285,7 @@
     },
     {
       "id": 18,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇸🇪",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -301,7 +301,7 @@
     },
     {
       "id": 19,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇬🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -317,7 +317,7 @@
     },
     {
       "id": 20,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇦🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -333,7 +333,7 @@
     },
     {
       "id": 21,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇹🇭",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -349,7 +349,7 @@
     },
     {
       "id": 22,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇪🇬",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -365,7 +365,7 @@
     },
     {
       "id": 23,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇵🇹",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -381,7 +381,7 @@
     },
     {
       "id": 24,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇮🇱",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -397,7 +397,7 @@
     },
     {
       "id": 25,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇨🇭",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -413,7 +413,7 @@
     },
     {
       "id": 26,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇯🇲",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -429,7 +429,7 @@
     },
     {
       "id": 27,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇵🇭",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -445,7 +445,7 @@
     },
     {
       "id": 28,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇨🇴",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -461,7 +461,7 @@
     },
     {
       "id": 29,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇵🇰",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -477,7 +477,7 @@
     },
     {
       "id": 30,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇸🇦",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -493,7 +493,7 @@
     },
     {
       "id": 31,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇵🇪",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -509,7 +509,7 @@
     },
     {
       "id": 32,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇧🇩",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -525,7 +525,7 @@
     },
     {
       "id": 33,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇻🇳",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -541,7 +541,7 @@
     },
     {
       "id": 34,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇳🇵",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -557,7 +557,7 @@
     },
     {
       "id": 35,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇭🇷",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -573,7 +573,7 @@
     },
     {
       "id": 36,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇲🇦",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -589,7 +589,7 @@
     },
     {
       "id": 37,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇺🇦",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -605,7 +605,7 @@
     },
     {
       "id": 38,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇨🇿",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -621,7 +621,7 @@
     },
     {
       "id": 39,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇨🇱",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -637,7 +637,7 @@
     },
     {
       "id": 40,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇰🇪",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -653,7 +653,7 @@
     },
     {
       "id": 41,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇲🇳",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -669,7 +669,7 @@
     },
     {
       "id": 42,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇱🇮",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -685,7 +685,7 @@
     },
     {
       "id": 43,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇧🇹",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -701,7 +701,7 @@
     },
     {
       "id": 44,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇲🇿",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -717,7 +717,7 @@
     },
     {
       "id": 45,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇸🇿",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -733,7 +733,7 @@
     },
     {
       "id": 46,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇰🇮",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -749,7 +749,7 @@
     },
     {
       "id": 47,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇵🇼",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -765,7 +765,7 @@
     },
     {
       "id": 48,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇰🇲",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -781,7 +781,7 @@
     },
     {
       "id": 49,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇸🇨",
       "questionText": "Which country's flag is this?",
       "options": [
@@ -797,7 +797,7 @@
     },
     {
       "id": 50,
-      "type": "emoji_decode",
+      "type": "emoji_flag",
       "emoji": "🇧🇳",
       "questionText": "Which country's flag is this?",
       "options": [
