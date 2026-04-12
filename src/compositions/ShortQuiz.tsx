@@ -12,6 +12,7 @@ import {
 import { QuizData, QuizQuestion, FPS, resolveType } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
+import { BackgroundMusic, VolumeKeyframe, V } from "../components/BackgroundMusic";
 import { BrandLogo } from "../components/BrandLogo";
 import { QuestionVisual } from "../components/QuestionVisual";
 
@@ -735,10 +736,42 @@ export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   offset += Q_TOTAL;
   const outroStart = offset;
   offset += S.OUTRO;
+  const totalFrames = offset;
+
+  /* ---- BGM volume schedule (fixed Shorts timeline) ---- */
+  const qSchedule = (qStart: number): VolumeKeyframe[] => [
+    { frame: qStart, volume: V.base },
+    { frame: qStart + S.Q_ENTER, volume: V.duck },
+    { frame: qStart + S.Q_ENTER + S.Q_TIMER - 8, volume: V.duck },
+    { frame: qStart + S.Q_ENTER + S.Q_TIMER, volume: V.mid },
+    { frame: qStart + Q_TOTAL, volume: V.base },
+  ];
+
+  const bgm: VolumeKeyframe[] = [
+    // Hook — high energy fade in
+    { frame: 0, volume: V.silent },
+    { frame: 10, volume: V.high },
+    { frame: S.HOOK - 8, volume: V.high },
+    { frame: S.HOOK, volume: V.base },
+    // Questions
+    ...qSchedule(q1Start),
+    ...qSchedule(q2Start),
+    // CTA
+    { frame: ctaStart, volume: V.mid },
+    { frame: ctaStart + S.CTA_MID, volume: V.base },
+    // More questions
+    ...qSchedule(q3Start),
+    ...qSchedule(q4Start),
+    // Outro — fade out
+    { frame: outroStart, volume: V.mid },
+    { frame: totalFrames - 30, volume: V.base * 0.4 },
+    { frame: totalFrames, volume: V.silent },
+  ];
 
   return (
     <AbsoluteFill>
       <Background />
+      <BackgroundMusic totalFrames={totalFrames} schedule={bgm} />
 
       {/* Watermark: GUESSLIX full, 18px */}
       <div

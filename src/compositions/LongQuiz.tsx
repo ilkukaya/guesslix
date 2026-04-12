@@ -22,6 +22,7 @@ import {
 } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
+import { BackgroundMusic, VolumeKeyframe, V, RAMP } from "../components/BackgroundMusic";
 import { BrandLogo } from "../components/BrandLogo";
 import { Watermark, QuestionCounter, DifficultyBar } from "../components/HUD";
 import { QuestionCard } from "../components/QuestionCard";
@@ -602,11 +603,57 @@ export const LongQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   });
 
   const outroStart = offset;
+  const totalVideoFrames = outroStart + OUTRO_FRAMES;
+
+  /* ---- BGM volume schedule ---- */
+  const bgm: VolumeKeyframe[] = [];
+
+  // Intro: fade in → high energy
+  bgm.push({ frame: 0, volume: V.silent });
+  bgm.push({ frame: FPS, volume: V.high });
+  bgm.push({ frame: INTRO_FRAMES - RAMP, volume: V.high });
+  bgm.push({ frame: INTRO_FRAMES, volume: V.base });
+
+  // Build combined chronological event list
+  const events = [
+    ...transitions.map((t) => ({ kind: "transition" as const, start: t.start, duration: t.duration })),
+    ...miniSplashes.map((s) => ({ kind: "splash" as const, start: s.start, duration: s.duration })),
+    ...questionSlots.map((q) => ({
+      kind: "question" as const,
+      start: q.start,
+      duration: q.duration,
+      timerSec: q.question.timerSeconds,
+    })),
+  ].sort((a, b) => a.start - b.start);
+
+  for (const ev of events) {
+    if (ev.kind === "transition") {
+      bgm.push({ frame: ev.start, volume: V.high });
+      bgm.push({ frame: ev.start + ev.duration, volume: V.base });
+    } else if (ev.kind === "splash") {
+      bgm.push({ frame: ev.start, volume: V.mid });
+      bgm.push({ frame: ev.start + ev.duration, volume: V.base });
+    } else {
+      const enterEnd = ev.start + PHASE.enter;
+      const timerEnd = enterEnd + PHASE.timer(ev.timerSec);
+      bgm.push({ frame: ev.start, volume: V.base });
+      bgm.push({ frame: enterEnd, volume: V.duck });
+      bgm.push({ frame: timerEnd - RAMP, volume: V.duck });
+      bgm.push({ frame: timerEnd, volume: V.mid });
+      bgm.push({ frame: ev.start + ev.duration, volume: V.base });
+    }
+  }
+
+  // Outro: gentle fade out
+  bgm.push({ frame: outroStart, volume: V.mid });
+  bgm.push({ frame: totalVideoFrames - 60, volume: V.base * 0.5 });
+  bgm.push({ frame: totalVideoFrames, volume: V.silent });
 
   return (
     <AbsoluteFill>
       <Background />
       <Watermark />
+      <BackgroundMusic totalFrames={totalVideoFrames} schedule={bgm} />
 
       <Sequence from={0} durationInFrames={INTRO_FRAMES}>
         <IntroSequence category={category} />
