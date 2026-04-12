@@ -1,6 +1,7 @@
 import { loadFont } from "@remotion/google-fonts/Montserrat";
 
 const { fontFamily } = loadFont();
+loadFont("italic", { weights: ["900"], subsets: ["latin"] });
 
 export const C = {
   bg: "#0A0E1A",

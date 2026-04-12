@@ -2,6 +2,7 @@ import React from "react";
 import { useCurrentFrame, spring, interpolate } from "remotion";
 import { C, FONT } from "../themes/tokens";
 import { FPS } from "../types";
+import { BrandLogo } from "./BrandLogo";
 
 // Deterministic pseudo-random
 const rand = (seed: number) => {
@@ -158,17 +159,8 @@ export const OutroScreen: React.FC = () => {
 
       {/* Logo at bottom */}
       <div style={anim(60)}>
-        <div
-          style={{
-            marginTop: 56,
-            fontSize: 40,
-            fontWeight: 900,
-            letterSpacing: 5,
-            opacity: 0.6,
-          }}
-        >
-          <span style={{ color: C.white }}>GUESS</span>
-          <span style={{ color: C.cyan }}>LIX</span>
+        <div style={{ marginTop: 56 }}>
+          <BrandLogo size={40} opacity={0.7} letterSpacing={5} showQuestion={false} glowIntensity={0.3} />
         </div>
       </div>
     </div>

@@ -22,6 +22,7 @@ import {
 } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
+import { BrandLogo } from "../components/BrandLogo";
 import { Watermark, QuestionCounter, DifficultyBar } from "../components/HUD";
 import { QuestionCard } from "../components/QuestionCard";
 import { OptionsGrid, FunFactOverlay } from "../components/OptionsReveal";
@@ -92,7 +93,7 @@ const IntroSequence: React.FC<{ category: string }> = ({ category }) => {
           width: 600,
           height: 600,
           borderRadius: "50%",
-          background: `radial-gradient(circle, ${C.cyanDim} 0%, transparent 70%)`,
+          background: `radial-gradient(circle, rgba(33,150,243,0.12) 0%, transparent 70%)`,
           opacity: 0.5,
         }}
       />
@@ -108,10 +109,8 @@ const IntroSequence: React.FC<{ category: string }> = ({ category }) => {
           opacity: logoOpacity,
         }}
       >
-        <div style={{ fontSize: 90, fontWeight: 900, letterSpacing: 6, textAlign: "center" }}>
-          <span style={{ color: C.white }}>GUESS</span>
-          <span style={{ color: C.cyan, textShadow: `0 0 40px ${C.cyanGlow}` }}>LIX</span>
-          <span style={{ color: C.gold, marginLeft: 10 }}>?</span>
+        <div style={{ textAlign: "center" }}>
+          <BrandLogo size={90} letterSpacing={6} glowIntensity={1} />
         </div>
       </div>
       {/* Category title — dynamic from JSON */}
@@ -258,14 +257,9 @@ const CategoryTransition: React.FC<{ difficulty: string }> = ({ difficulty }) =>
               transform: `rotateY(${medalRotation}deg) scale(${medalScale})`,
               transformStyle: "preserve-3d",
               opacity: medalOpacity * medalFade,
-              fontSize: 60,
-              fontWeight: 900,
-              letterSpacing: 5,
-              textShadow: `0 0 30px ${C.cyanGlow}`,
             }}
           >
-            <span style={{ color: C.white }}>GUESS</span>
-            <span style={{ color: C.cyan }}>LIX</span>
+            <BrandLogo size={60} letterSpacing={5} showQuestion={false} glowIntensity={0.7} />
           </div>
         </div>
       )}
@@ -338,15 +332,10 @@ const MiniSplash: React.FC = () => {
         style={{
           transform: `scale(${logoScale})`,
           opacity: logoOpacity,
-          fontSize: 52,
-          fontWeight: 900,
-          letterSpacing: 4,
           zIndex: 10,
         }}
       >
-        <span style={{ color: C.white }}>GUESS</span>
-        <span style={{ color: C.cyan, textShadow: `0 0 30px ${C.cyanGlow}` }}>LIX</span>
-        <span style={{ color: C.gold, marginLeft: 6 }}>?</span>
+        <BrandLogo size={52} letterSpacing={4} glowIntensity={0.8} />
       </div>
 
       {/* "?" bubbles popping in */}

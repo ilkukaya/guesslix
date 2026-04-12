@@ -1,5 +1,6 @@
 import React from "react";
 import { C, FONT } from "../themes/tokens";
+import { BrandLogo } from "./BrandLogo";
 
 /* ===== WATERMARK (colored, 26px) ===== */
 export const Watermark: React.FC = () => (
@@ -8,16 +9,10 @@ export const Watermark: React.FC = () => (
       position: "absolute",
       top: 26,
       right: 36,
-      fontFamily: FONT,
-      fontSize: 26,
-      fontWeight: 900,
-      letterSpacing: 3,
-      opacity: 0.35,
       zIndex: 100,
     }}
   >
-    <span style={{ color: C.white }}>GUESS</span>
-    <span style={{ color: C.cyan }}>LIX</span>
+    <BrandLogo size={26} opacity={0.4} letterSpacing={3} showQuestion={false} glowIntensity={0} />
   </div>
 );
 
