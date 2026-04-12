@@ -12,6 +12,7 @@ import {
 import { QuizData, QuizQuestion, FPS, resolveType } from "../types";
 import { C, FONT } from "../themes/tokens";
 import { Background } from "../components/Background";
+import { BrandLogo } from "../components/BrandLogo";
 import { QuestionVisual } from "../components/QuestionVisual";
 
 /* ================================================================
@@ -691,17 +692,8 @@ const ShortOutro: React.FC = () => {
         </div>
 
         <div style={anim(36)}>
-          <div
-            style={{
-              marginTop: 36,
-              fontSize: 36,
-              fontWeight: 900,
-              letterSpacing: 4,
-              opacity: 0.5,
-            }}
-          >
-            <span style={{ color: C.white }}>GUESS</span>
-            <span style={{ color: C.cyan }}>LIX</span>
+          <div style={{ marginTop: 36 }}>
+            <BrandLogo size={36} opacity={0.6} letterSpacing={4} showQuestion={false} glowIntensity={0.3} />
           </div>
         </div>
       </div>
@@ -754,16 +746,10 @@ export const ShortQuiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
           position: "absolute",
           top: 18,
           right: 20,
-          fontFamily: FONT,
-          fontSize: 18,
-          fontWeight: 900,
-          letterSpacing: 2,
-          opacity: 0.3,
           zIndex: 100,
         }}
       >
-        <span style={{ color: C.white }}>GUESS</span>
-        <span style={{ color: C.cyan }}>LIX</span>
+        <BrandLogo size={18} opacity={0.35} letterSpacing={2} showQuestion={false} glowIntensity={0} />
       </div>
 
       <Sequence from={hookStart} durationInFrames={S.HOOK}>
