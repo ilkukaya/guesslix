@@ -1,19 +1,20 @@
 import { Composition } from 'remotion';
 import { LongQuiz } from './compositions/LongQuiz';
 import { ShortQuiz, SHORT_TOTAL_FRAMES } from './compositions/ShortQuiz';
-import { LongQuizV2, calcLongV2Duration } from './compositions/LongQuizV2';
-import { ShortQuizV2, calcShortV2Duration } from './compositions/ShortQuizV2';
-import { FlagQuizV2Props } from './types/flagQuiz';
 import { FPS, calcLongDuration } from './types';
 import sampleData from './data/active-quiz.json';
-import flagsData from './data/flags-197.json';
 
-const typedFlagsData = flagsData as unknown as { questions: FlagQuizV2Props['questions'] };
+import { LongQuizV3, calcLongV3Duration } from './v3/compositions/LongQuizV3';
+import { ShortQuizV3, calcShortV3Duration } from './v3/compositions/ShortQuizV3';
+import flagsV3 from './data/flags-197.json';
+import type { FlagsQuizData } from './v3/types';
+
+const flagsData = flagsV3 as FlagsQuizData;
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      {/* ── v1 compositions (unchanged) ── */}
+      {/* v1 — original universal quiz */}
       <Composition
         id="LongQuiz"
         component={LongQuiz}
@@ -33,30 +34,28 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ quizData: sampleData as any }}
       />
 
-      {/* ── v2 Flag Premium compositions ── */}
+      {/* v3 — Atlas editorial flag format */}
       <Composition
-        id="LongQuizV2"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        component={LongQuizV2 as React.ComponentType<any>}
-        durationInFrames={calcLongV2Duration(197)}
-        fps={30}
+        id="LongQuizV3"
+        component={LongQuizV3 as React.FC}
+        durationInFrames={calcLongV3Duration(flagsData.questions.length)}
+        fps={FPS}
         width={1920}
         height={1080}
         defaultProps={{
-          questions: typedFlagsData.questions,
-          maxQuestions: 197,
+          questions: flagsData.questions,
+          maxQuestions: flagsData.questions.length,
         }}
       />
       <Composition
-        id="ShortQuizV2"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        component={ShortQuizV2 as React.ComponentType<any>}
-        durationInFrames={calcShortV2Duration()}
-        fps={30}
+        id="ShortQuizV3"
+        component={ShortQuizV3 as React.FC}
+        durationInFrames={calcShortV3Duration(10)}
+        fps={FPS}
         width={1080}
         height={1920}
         defaultProps={{
-          questions: typedFlagsData.questions,
+          questions: flagsData.questions,
           maxQuestions: 10,
         }}
       />

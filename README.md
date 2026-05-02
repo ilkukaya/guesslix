@@ -68,103 +68,46 @@ Format:
 
 ---
 
-## v2 Flag Premium Format — Kullanım
+## v3 Flag Premium Format — Kullanım
 
-### Genel Bakış
+v3 ("Atlas") editorial-cinematic bayrak quiz formatı. v1 (universal quiz)
+yanında ikinci composition seti olarak çalışır.
 
-`LongQuizV2` ve `ShortQuizV2` compositionları, 197 ülkeyi kapsayan yüksek kaliteli bir bayrak quiz formatı sunar. Tasarım referansı: "The Quiz Place" kanalının 5.6M izlenen 197 bayrak videosu.
+**Compositionlar**
+- `LongQuizV3` — 1920×1080, 197 ülke, ~19m 50s
+- `ShortQuizV3` — 1080×1920, 10 ülke, ~65s (YT Shorts uyumlu)
 
-### Yeni compositionlar
-
-| Composition  | Boyut       | FPS | Soru  | Süre     |
-|-------------|-------------|-----|-------|----------|
-| LongQuizV2  | 1920×1080   | 30  | 197   | ~19.8 dk |
-| ShortQuizV2 | 1080×1920   | 30  | 10    | ~68 sn   |
-
-### Preview (Studio)
-
+**Önizleme**
 ```bash
 npm run dev
+# studio'da LongQuizV3 veya ShortQuizV3 seç
 ```
 
-Studio'da `LongQuizV2` ve `ShortQuizV2` compositionlarını seçerek önizleyebilirsin.
-
-### Render
-
+**Render**
 ```bash
-# 197 soru, 1920×1080 — out/flags-197-long.mp4
-npm run render:flags-long
-
-# 10 soru (Shorts), 1080×1920 — out/flags-10-short.mp4
-npm run render:flags-short
+npm run render:flags-long    # → out/flags-197-long.mp4
+npm run render:flags-short   # → out/flags-10-short.mp4
 ```
 
-> **Not:** 197 soruluk render yaklaşık 35.700 frame içerir. `--concurrency=4` ile render süresi makul tutulur ancak yine de uzun sürer. Güçlü bir makinede yaklaşık 15–30 dakika.
+**Veri**
+197 ülkenin tamamı `src/data/flags-197.json`'da, zorluk eğrisine göre sıralı:
+1-30 kolay, 31-100 orta, 101-170 zor, 171-197 sadist.
+Daha kısa bir quiz için `Root.tsx`'te `maxQuestions` değerini değiştir.
 
-### Görsel sistem
+**Tasarım dili**
+- Editorial palette: deep navy + gold + ivory + coral/mint accents
+- Bayrak büyük ve serbest (bounded card yok)
+- "Ghost countdown" — 4-3-2-1 büyük şeffaf rakam bayrağın arkasında
+- Slim üst timer bar — soldan sağa drain eder
+- Continent-directional sweep-in: bayrak kıtanın yönünden gelir
+- Country reveal: outline + solid kinetic typography
+- Color bars reveal: bayrağın 3 ana rengi alttan büyür
+- Outro: 5 katmanlı tier ladder ("TOURIST → ATLAS")
 
-- **Renk paleti:** `src/theme.ts` dosyasında CSS değişkenleri olarak tanımlı
-- **Tipografi:** Anton (başlıklar/sayaç) + Inter (gövde), Google Fonts üzerinden yüklenir
-- **Arka plan:** Yavaş animasyonlu mesh gradient (`MeshBackground`) + film grain overlay (`GrainOverlay`)
-- **Bayraklar:** `flag-icons` npm paketi üzerinden CSS sınıflarıyla render edilir
-
-### Veri kaynağı
-
-`src/data/flags-197.json` — 197 ülkenin tamamını içerir:
-
-```json
-{
-  "id": 1,
-  "country": "United States",
-  "countryCode": "us",
-  "primaryColors": ["#B22234", "#FFFFFF", "#3C3B6E"],
-  "difficulty": "easy",
-  "continent": "Americas",
-  "funFact": "The 50 stars represent the 50 states..."
-}
-```
-
-**Zorluk dağılımı:**
-- `easy` (1–30): ABD, İngiltere, Fransa, Japonya, vb.
-- `medium` (31–100): Polonya, Endonezya, Etiyopya, Kazakistan, vb.
-- `hard` (101–170): Kuzey Kore, Kamboçya, Vanuatu, Solomon Adaları, vb.
-- `sadist` (171–197): Komor, Kiribati, Tuvalu, Nauru, Palau, Vatikan, vb.
-
-### Gerekli ses dosyaları
-
-Aşağıdaki ses dosyaları `public/audio/` klasörüne eklenmelidir:
-
-| Dosya                    | Kullanım                              |
-|--------------------------|---------------------------------------|
-| `tick.wav`               | Her saniye sayacı (mevcut ✅)         |
-| `reveal.wav`             | Cevap açıklanırken (mevcut ✅)        |
-| `intro_whoosh.wav`       | Intro ekranı                          |
-| `outro.wav`              | Outro ekranı                          |
-
-Mevcut `public/audio/` klasöründe `tick.wav` ve `fanfare.wav` zaten bulunmaktadır. `intro_whoosh.wav` için `whoosh.wav`'ı, `outro.wav` için `fanfare.wav`'ı yeniden adlandırabilir ya da yeni dosyalar ekleyebilirsin.
-
-### Yeni dosyalar (v2)
-
-```
-src/
-├── theme.ts                              ← Renk paleti ve font token'ları
-├── types/flagQuiz.ts                     ← FlagQuestion, FlagQuizV2Props tipleri
-├── data/flags-197.json                   ← 197 ülke verisi
-├── components/shared/
-│   ├── MeshBackground.tsx                ← Animasyonlu mesh gradient arka plan
-│   ├── GrainOverlay.tsx                  ← Film grain dokusu
-│   ├── CounterPill.tsx                   ← Soru numarası pill'i
-│   ├── TimerRingV2.tsx                   ← SVG dairesel sayaç
-│   ├── FlagDisplay.tsx                   ← flag-icons ile bayrak gösterimi
-│   ├── FlagQuestionScene.tsx             ← 180 frame'lik soru sahnesi
-│   ├── IntroSceneV2.tsx                  ← 90 frame'lik intro
-│   └── OutroSceneV2.tsx                  ← 150 frame'lik outro
-└── compositions/
-    ├── LongQuizV2.tsx                    ← 16:9 tam uzunluk composition
-    └── ShortQuizV2.tsx                   ← 9:16 Shorts composition
-```
-
----
+**Ses dosyaları (mevcut)**
+v3, halihazırdaki `public/audio/` setini kullanır:
+`whoosh.wav`, `tick.wav`, `tick_fast.wav`, `pop.wav`, `correct.wav`,
+`intro_boom.wav`, `fanfare.wav`, `bgm.wav`. Yeni dosya gerekmiyor.
 
 ## Sorun Giderme
 

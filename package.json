@@ -6,8 +6,9 @@
     "dev": "remotion studio",
     "render:long": "remotion render LongQuiz",
     "render:short": "remotion render ShortQuiz",
-    "render:flags-long": "remotion render LongQuizV2 out/flags-197-long.mp4 --concurrency=4",
-    "render:flags-short": "remotion render ShortQuizV2 out/flags-10-short.mp4 --concurrency=4"
+    "render:flags-long": "remotion render LongQuizV3 out/flags-197-long.mp4 --concurrency=4",
+    "render:flags-short": "remotion render ShortQuizV3 out/flags-10-short.mp4 --concurrency=4",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@remotion/cli": "4.0.242",
