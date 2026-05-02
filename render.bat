@@ -56,3 +56,6 @@ echo [GUESSLIX] Tamamlandi! Videolar out/ klasorunde:
 if exist "out\%DATAFILE%-long.mp4" echo   - out/%DATAFILE%-long.mp4
 if exist "out\%DATAFILE%-short.mp4" echo   - out/%DATAFILE%-short.mp4
 echo.
+echo v2 flag premium icin:
+echo   npm run render:flags-long   -^> out/flags-197-long.mp4
+echo   npm run render:flags-short  -^> out/flags-10-short.mp4

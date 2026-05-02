@@ -43,3 +43,7 @@ echo "[GUESSLIX] Tamamlandi! Videolar out/ klasorunde:"
 [ -f "out/${DATAFILE}-long.mp4" ] && echo "  - out/${DATAFILE}-long.mp4"
 [ -f "out/${DATAFILE}-short.mp4" ] && echo "  - out/${DATAFILE}-short.mp4"
 echo ""
+
+# v2 flag premium commands (dogrudan npm run ile de calistirabilirsin):
+#   npm run render:flags-long   -> out/flags-197-long.mp4
+#   npm run render:flags-short  -> out/flags-10-short.mp4
