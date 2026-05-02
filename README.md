@@ -66,6 +66,47 @@ Format:
 }
 ```
 
+## v3 Flag Premium Format — Kullanım
+
+v3 ("Atlas") tamamen yeni bir editorial-cinematic format. v1/v2 dokunulmadı —
+yan yana üç format var.
+
+**Compositionlar**
+- `LongQuizV3` — 1920×1080, 197 ülke, ~19m 50s
+- `ShortQuizV3` — 1080×1920, 10 ülke, ~65s (YT Shorts uyumlu)
+
+**Önizleme**
+```bash
+npm run dev
+# studio'da LongQuizV3 veya ShortQuizV3 seç
+```
+
+**Render**
+```bash
+npm run render:flags-long    # → out/flags-197-long.mp4
+npm run render:flags-short   # → out/flags-10-short.mp4
+```
+
+**Veri**
+197 ülkenin tamamı `src/data/flags-197.json`'da, zorluk eğrisine göre sıralı:
+1-30 kolay, 31-100 orta, 101-170 zor, 171-197 sadist.
+Kendi kısa quizinizi yapmak için: `Root.tsx`'te `maxQuestions` değerini değiştir.
+
+**Tasarım dili (v2'den farklılıklar)**
+- Editorial palette: deep navy + gold + ivory + coral/mint accents (neon yok)
+- Bayrak büyük ve serbest (v2'deki küçük bounded card değil)
+- "Ghost countdown" — 4-3-2-1 büyük şeffaf rakam bayrağın arkasında
+- Slim üst timer bar — drains right to left
+- Continent-directional sweep-in: bayrak kıtanın yönünden gelir
+- Country reveal: outline + solid kinetic typography
+- Color bars reveal: bayrağın 3 ana rengi alttan büyür
+- Outro: 5 katmanlı tier ladder ("TOURIST → ATLAS")
+
+**Ses dosyaları (mevcut)**
+v3, halihazırdaki `public/audio/` setini kullanır:
+`whoosh.wav`, `tick.wav`, `tick_fast.wav`, `pop.wav`, `correct.wav`,
+`intro_boom.wav`, `fanfare.wav`, `bgm.wav`. Yeni dosya gerekmiyor.
+
 ## Sorun Giderme
 
 **"npm not found"** → Node.js kurulu değil. nodejs.org'dan indir.
