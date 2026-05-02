@@ -5,11 +5,14 @@
   "scripts": {
     "dev": "remotion studio",
     "render:long": "remotion render LongQuiz",
-    "render:short": "remotion render ShortQuiz"
+    "render:short": "remotion render ShortQuiz",
+    "render:flags-long": "remotion render LongQuizV2 out/flags-197-long.mp4 --concurrency=4",
+    "render:flags-short": "remotion render ShortQuizV2 out/flags-10-short.mp4 --concurrency=4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.242",
     "@remotion/google-fonts": "4.0.242",
+    "flag-icons": "^7.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remotion": "4.0.242"
