@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   AbsoluteFill,
-  Audio,
   interpolate,
   spring,
-  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
 import { tokens, Layout, sizes } from '../theme';
+import { SoundFx } from './SoundFx';
 
 interface IntroSceneProps {
   totalQuestions: number;
@@ -42,13 +41,11 @@ export const IntroScene: React.FC<IntroSceneProps> = ({
   const subO = interpolate(frame, [50, 70], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const subY = interpolate(sub, [0, 1], [40, 0]);
 
-  // exit wipe — last 10 frames a paper rectangle sweeps across
-  const wipe = spring({
-    frame: frame - 78,
-    fps,
-    config: { damping: 18, stiffness: 180, mass: 1 },
+  // exit wipe — last 12 frames a gold bar sweeps right across
+  const wipeX = interpolate(frame, [78, 90], [-110, 110], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
   });
-  const wipeX = frame >= 78 ? interpolate(wipe, [0, 1], [-110, 110]) : -110;
 
   return (
     <AbsoluteFill
@@ -173,12 +170,8 @@ export const IntroScene: React.FC<IntroSceneProps> = ({
         }}
       />
 
-      {frame === 0 && (
-        <Audio src={staticFile('audio/intro_boom.wav')} volume={0.85} />
-      )}
-      {frame === 78 && (
-        <Audio src={staticFile('audio/whoosh.wav')} volume={0.9} />
-      )}
+      <SoundFx src="audio/intro_boom.wav" from={0} volume={0.8} durationInFrames={75} />
+      <SoundFx src="audio/whoosh.wav" from={78} volume={0.85} durationInFrames={30} />
     </AbsoluteFill>
   );
 };

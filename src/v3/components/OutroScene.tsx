@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   AbsoluteFill,
-  Audio,
   interpolate,
   spring,
-  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
 import { tokens, Layout, sizes } from '../theme';
+import { SoundFx } from './SoundFx';
 
 interface OutroSceneProps {
   totalQuestions: number;
@@ -205,9 +204,7 @@ export const OutroScene: React.FC<OutroSceneProps> = ({
         </span>
       </div>
 
-      {frame === 0 && (
-        <Audio src={staticFile('audio/fanfare.wav')} volume={0.7} />
-      )}
+      <SoundFx src="audio/fanfare.wav" from={0} volume={0.7} durationInFrames={150} />
     </AbsoluteFill>
   );
 };

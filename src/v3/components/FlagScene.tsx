@@ -1,10 +1,8 @@
 import React from 'react';
 import {
   AbsoluteFill,
-  Audio,
   interpolate,
   spring,
-  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
@@ -16,6 +14,7 @@ import { GhostCountdown } from './GhostCountdown';
 import { FlagPlate } from './FlagPlate';
 import { CountryReveal } from './CountryReveal';
 import { ColorBars } from './ColorBars';
+import { SoundFx } from './SoundFx';
 
 interface FlagSceneProps {
   question: FlagQuestion;
@@ -197,25 +196,19 @@ export const FlagScene: React.FC<FlagSceneProps> = ({
         </>
       )}
 
-      {/* ── audio cues ── */}
-      {lf === 0 && (
-        <Audio src={staticFile('audio/whoosh.wav')} volume={0.55} />
-      )}
-      {[0, 1, 2, 3].map((sec) =>
-        lf === TIMER_START + sec * fps ? (
-          <Audio
-            key={sec}
-            src={staticFile(sec === 3 ? 'audio/tick_fast.wav' : 'audio/tick.wav')}
-            volume={sec === 3 ? 0.95 : 0.7}
-          />
-        ) : null,
-      )}
-      {lf === FLASH_START && (
-        <Audio src={staticFile('audio/pop.wav')} volume={0.8} />
-      )}
-      {lf === REVEAL_START && (
-        <Audio src={staticFile('audio/correct.wav')} volume={0.85} />
-      )}
+      {/* ── audio cues — Sequence-wrapped so they actually play ── */}
+      <SoundFx src="audio/whoosh.wav" from={0} volume={0.5} durationInFrames={30} />
+      {[0, 1, 2, 3].map((sec) => (
+        <SoundFx
+          key={sec}
+          src={sec === 3 ? 'audio/tick_fast.wav' : 'audio/tick.wav'}
+          from={TIMER_START + sec * fps}
+          volume={sec === 3 ? 0.9 : 0.55}
+          durationInFrames={fps}
+        />
+      ))}
+      <SoundFx src="audio/pop.wav" from={FLASH_START} volume={0.7} durationInFrames={20} />
+      <SoundFx src="audio/correct.wav" from={REVEAL_START} volume={0.85} durationInFrames={45} />
     </AbsoluteFill>
   );
 };
